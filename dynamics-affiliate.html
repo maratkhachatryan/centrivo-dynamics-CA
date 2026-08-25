@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitain iGaming Platform — Affiliate</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%230F766E"/><text x="16" y="22.5" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="white" text-anchor="middle">D</text></svg>'>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sw:230px;--accent:#1A56DB;--centrivo:#0F766E;--centrivo2:#134E4A;--centrivo-light:#F0FDFA;
+  --dark:#0E1117;--surface:#F7F8FC;--border:#E4E7EF;--text:#111827;--muted:#6B7280;--faint:#9CA3AF;
+  --r-md:10px;--r-lg:14px;--r-xl:20px;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);
+  --sh-md:0 6px 20px rgba(0,0,0,.12);
+  --font:"Roboto","Tahoma",sans-serif;--font-cond:"Roboto Condensed","Tahoma",sans-serif
+}
+body{font-family:var(--font);background:var(--surface);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:var(--sw);background:var(--dark);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar__logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo-wrap{display:flex;align-items:center;gap:9px}
+.logo-icon{width:30px;height:30px;background:var(--centrivo);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round}
+.logo-text{font-size:15px;font-weight:700;color:white;letter-spacing:-.3px}
+.logo-sub{font-size:10.5px;color:rgba(255,255,255,.4);letter-spacing:.04em;margin-top:1px}
+.sidebar__nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-section{font-size:10px;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;padding:0 14px;margin:12px 0 4px}
+.nav-item{display:block;color:rgba(255,255,255,.45);padding:5px 14px;border-radius:5px;text-decoration:none;transition:all .12s;font-weight:500;line-height:1.4}
+.nav-item:hover{color:white;background:rgba(255,255,255,.05)}
+.nav-item.active{color:white;font-weight:600;background:rgba(15,118,110,.28);border-left:2px solid var(--centrivo)}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none}
+.nav-link:hover{color:white}
+.nav-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+.sidebar__foot{padding:12px 14px;border-top:1px solid rgba(255,255,255,.06)}
+.foot-label{font-size:10.5px;color:rgba(255,255,255,.35);display:block;margin-bottom:2px}
+.foot-email{font-size:12px;font-weight:500;color:rgba(255,255,255,.65)}
+.foot-phone{font-size:11.5px;color:rgba(255,255,255,.38);margin-top:1px}
+.header{position:fixed;top:0;left:var(--sw);right:0;height:52px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;padding:0 22px;gap:10px;z-index:90}
+.h-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.h-btn svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5}
+.h-av{width:32px;height:32px;border-radius:50%;background:var(--centrivo);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;cursor:pointer}
+.main-page{margin-left:var(--sw);padding-top:52px;flex:1}
+.main-inner{max-width:1080px;margin:0 auto;padding:30px 22px 80px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);margin-bottom:18px;flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .12s}
+.breadcrumb a:hover{color:var(--centrivo)}
+.bc-sep{color:var(--border)}
+.page-title{font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.4px;margin-bottom:5px}
+.page-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+/* TABS */
+.tabs-bar{background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:5px;display:inline-flex;gap:3px;box-shadow:var(--sh);margin-bottom:18px}
+.t-btn{padding:8px 16px;border-radius:10px;font-size:14px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .15s}
+.t-btn.active{background:var(--centrivo);color:white;box-shadow:0 2px 8px rgba(15,118,110,.35)}
+.t-btn:hover:not(.active){background:var(--surface);color:var(--text)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+/* WIDGET */
+.widget{background:white;border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:16px}
+.widget__head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.widget__title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+.widget__body{padding:20px 22px}
+/* FEATURE BANNER */
+.feature-banner{border-radius:var(--r-xl);overflow:hidden;background:#071210;margin-bottom:18px;display:flex;min-height:200px;border:1px solid rgba(255,255,255,.04)}
+.fb-left{width:260px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.fb-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(15,118,110,.45) 0%,transparent 70%);top:-40px;left:-40px}
+.fb-icon{font-size:72px;position:relative;z-index:1;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))}
+.fb-right{flex:1;padding:32px;display:flex;flex-direction:column;justify-content:center}
+.fb-tag{display:inline-flex;align-items:center;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.07em;color:#5EEAD4;background:rgba(15,118,110,.2);border:1px solid rgba(15,118,110,.35);border-radius:20px;padding:3px 10px;margin-bottom:12px;text-transform:uppercase;white-space:nowrap}
+.fb-title{font-size:26px;font-weight:700;color:white;letter-spacing:-.4px;margin-bottom:8px}
+.fb-sub{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;max-width:460px}
+.fb-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:var(--centrivo);color:white;border-radius:var(--r-md);font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;border:none;cursor:pointer;font-family:var(--font);align-self:flex-start}
+.fb-btn:hover{background:var(--centrivo2)}
+.fb-btn svg{width:13px;height:13px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round}
+/* FEAT GRID */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat-card{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border)}
+.feat-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round}
+.feat-icon.ct{background:var(--centrivo-light);color:var(--centrivo)}
+.feat-icon.bl{background:#EEF4FF;color:#1A56DB}
+.feat-icon.pu{background:#EDE9FE;color:#7C3AED}
+.feat-icon.am{background:#FFFBEB;color:#D97706}
+.feat-icon.re{background:#FFF1F2;color:#E11D48}
+.feat-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.feat-desc{font-size:13px;color:var(--muted);line-height:1.6}
+/* ACCORDION */
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-item:last-child{border-bottom:none}
+.acc-header{display:flex;align-items:center;gap:10px;padding:14px 0;cursor:pointer}
+.acc-header:hover .acc-title{color:var(--centrivo)}
+.acc-title{font-size:14px;font-weight:700;color:var(--text);flex:1;transition:color .15s}
+.acc-chevron{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.acc-chevron svg{width:11px;height:11px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;transition:transform .2s}
+.acc-item.open .acc-chevron{background:var(--centrivo);border-color:var(--centrivo)}
+.acc-item.open .acc-chevron svg{stroke:white;transform:rotate(180deg)}
+.acc-body{display:none;padding-bottom:14px;font-size:14px;color:var(--muted);line-height:1.7}
+.acc-item.open .acc-body{display:block}
+/* BV */
+.bv-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.bv-item:last-child{border-bottom:none}
+.bv-icon{width:38px;height:38px;border-radius:50%;background:var(--centrivo);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bv-icon svg{width:18px;height:18px;stroke:white;fill:none;stroke-width:1.8;stroke-linecap:round}
+.bv-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.bv-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+/* SOL TABS (used in sub-sections) */
+.sol-tabs{display:flex;gap:3px;background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:4px;box-shadow:var(--sh);margin-bottom:18px;width:fit-content}
+.sol-tab{padding:7px 16px;border-radius:9px;font-size:14px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .15s}
+.sol-tab.active{background:var(--centrivo);color:white}
+.sol-tab:hover:not(.active){background:var(--surface);color:var(--text)}
+/* CARDS GRID 2x2 */
+.cards-2x2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.section-card{background:white;border-radius:var(--r-xl);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh);text-decoration:none;display:flex;flex-direction:column;transition:all .22s}
+.section-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:rgba(15,118,110,.18)}
+.section-card__banner{height:180px;position:relative;display:flex;align-items:center;justify-content:space-between;padding:28px 32px;overflow:hidden}
+.section-card__glow{position:absolute;width:260px;height:260px;border-radius:50%;right:-60px;bottom:-80px;opacity:.25;pointer-events:none}
+.section-card__icon{font-size:70px;position:relative;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5))}
+.section-card__meta{position:relative;z-index:1;text-align:right}
+.section-card__num{font-size:38px;font-weight:700;color:white;letter-spacing:-1px;line-height:1;margin-bottom:3px}
+.section-card__label{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.section-card__badges{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap;align-items:flex-start}
+.sc-badge{font-size:10.5px;font-weight:700;padding:5px 9px;border-radius:6px;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center}
+.sc-badge-solid{background:var(--centrivo);color:white}
+.sc-badge-outline{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.22)}
+.section-card__body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:10px}
+.section-card__top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.section-card__name{font-size:19px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.section-card__explore{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--centrivo);padding:5px 12px;border-radius:20px;background:var(--centrivo-light);border:1px solid rgba(15,118,110,.18);white-space:nowrap;transition:all .15s;flex-shrink:0;width:fit-content}
+.section-card:hover .section-card__explore{background:var(--centrivo);color:white;border-color:var(--centrivo)}
+.section-card__explore svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.section-card__desc{font-size:14px;color:var(--muted);line-height:1.6}
+.section-card__tags{display:flex;gap:5px;flex-wrap:wrap;align-items:flex-start}
+.sc-tag{font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted);white-space:nowrap;flex-shrink:0}
+/* STAT TILES */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-tile{background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:18px;box-shadow:var(--sh)}
+.stat-tile__label{font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.stat-tile__val{font-size:24px;font-weight:700;color:var(--centrivo);letter-spacing:-.5px}
+.stat-tile__sub{font-size:12px;color:var(--muted);margin-top:2px}
+/* ===== AFFILIATE DEEP-DIVE ADDITIONS ===== */
+.guide-badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7C3AED;background:#EDE9FE;border:1px solid #DDD6FE;border-radius:20px;padding:3px 10px;white-space:nowrap;flex-shrink:0}
+.disclaim{font-size:12px;color:var(--faint);font-style:italic;margin:2px 2px 18px}
+.gtable{width:100%;border-collapse:collapse;font-size:13.5px}
+.gtable th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:8px 10px;border-bottom:2px solid var(--border)}
+.gtable td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--muted);line-height:1.55;vertical-align:top}
+.gtable tr:last-child td{border-bottom:none}
+.gtable td b{color:var(--text)}
+.gtable tr.hl td{background:var(--centrivo-light)}
+.hl-band{display:flex;align-items:center;gap:18px;border-radius:var(--r-xl);padding:18px 22px;margin-bottom:16px;border:1px solid rgba(15,118,110,.22);background:linear-gradient(135deg,var(--centrivo-light),#fff);box-shadow:var(--sh)}
+.hl-band .big{font-size:30px;font-weight:700;color:var(--centrivo);letter-spacing:-1px;white-space:nowrap}
+.hl-band p{font-size:14px;color:var(--muted);line-height:1.65}
+.hl-band p b{color:var(--text)}
+.hl-band.warn{border-color:rgba(217,119,6,.32);background:linear-gradient(135deg,#FFFBEB,#fff)}
+.hl-band.warn .big{color:#D97706}
+.prob-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px}
+.pc-tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--centrivo);margin-bottom:6px}
+.warn-strip{display:flex;gap:10px;align-items:flex-start;background:#FFFBEB;border:1px solid rgba(217,119,6,.3);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#92400E;line-height:1.6;margin-top:14px}
+.warn-strip b{color:inherit}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:600;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:7px 14px}
+.chip b{color:var(--centrivo)}
+.aff-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.aff-pillar{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 13px;font-size:13.5px;font-weight:600;color:var(--text);line-height:1.35}
+.aff-pillar .ic{font-size:18px;flex-shrink:0}
+.pick-grid{display:grid;gap:8px;margin-bottom:14px}
+.pick-card{border:1px solid var(--border);border-radius:12px;background:white;padding:12px;cursor:pointer;text-align:left;font-family:var(--font);transition:all .15s;display:block}
+.pick-card:hover{border-color:var(--centrivo);transform:translateY(-2px)}
+.pick-card.on{border-color:var(--centrivo);background:var(--centrivo-light);box-shadow:0 4px 14px rgba(15,118,110,.16)}
+.pick-card .ic{font-size:22px;margin-bottom:6px}
+.pick-card .nm{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:3px}
+.pick-card .pr{font-size:11.5px;color:var(--muted);line-height:1.45}
+.pick-out{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px}
+.pick-out .po-name{font-size:14px;font-weight:700;color:var(--centrivo);margin-bottom:6px}
+.pick-out .po-body{font-size:14px;color:var(--muted);line-height:1.7}
+.pick-out .po-body b{color:var(--text)}
+.pick-out .po-note{margin-top:12px;font-size:13px;color:var(--centrivo2);background:var(--centrivo-light);border:1px solid rgba(15,118,110,.2);border-radius:8px;padding:9px 12px;line-height:1.55}
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.model-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px}
+.model-card .mc-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+.model-card .mc-name{font-size:15px;font-weight:700;color:var(--text)}
+.model-card .mc-rate{font-size:13px;font-weight:700;color:var(--centrivo);white-space:nowrap}
+.model-card .mc-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+.model-card .mc-desc b{color:var(--text)}
+.model-card .mc-fit{margin-top:8px;font-size:12px;font-weight:600;color:var(--centrivo2);background:var(--centrivo-light);border:1px solid rgba(15,118,110,.18);border-radius:8px;padding:6px 10px;line-height:1.5}
+.aff-stage{display:block;background:#fff;border:1px solid var(--border);border-radius:14px;padding:13px 14px;min-height:150px}
+.aff-stage .st-t{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3}
+.aff-stage .st-d{font-size:12.5px;color:var(--muted);line-height:1.55}
+.aff-stage .st-tie{display:block;font-size:11.5px;font-weight:600;color:var(--centrivo);margin-top:8px;line-height:1.5}
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+a.risk-card{display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,#fff,#F0FDFA);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;text-decoration:none;transition:all .16s;margin-bottom:14px;box-shadow:var(--sh)}
+a.risk-card:hover{border-color:var(--centrivo);transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,118,110,.14)}
+
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sidebar__logo">
+    <div class="logo-wrap"><div class="logo-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M8 5v6"/></svg></div>
+    <div><div class="logo-text">Digitain <span class="logo-dyn">DYNAMICS</span></div><div class="logo-sub">IGAMING PLATFORM</div></div></div>
+  </div>
+  <div class="dse-wrap"><button class="dse-btn" onclick="dseOpen()" type="button"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m15.8 15.8 5.2 5.2"/></svg>Search<span class="dse-btn__kbd">Ctrl K</span></button></div>
+<div class="sidebar__nav">
+    <div class="nav-section">iGaming Platform</div>
+    <a class="nav-item" href="index.html" style="font-size:13px">Platform Overview</a>
+    <a class="nav-section" href="dynamics-player-journey.html" style="margin-top:14px">Player Journey</a>
+    <a class="nav-item" href="dynamics-acquisition.html" style="padding-left:26px;font-size:12.5px">Acquisition</a>
+    <a class="nav-item active" href="dynamics-affiliate.html" style="padding-left:34px;font-size:12px">Affiliate</a>
+    <a class="nav-item" href="dynamics-referral.html" style="padding-left:34px;font-size:12px">Referral</a>
+    <a class="nav-item" href="dynamics-campaigns.html" style="padding-left:34px;font-size:12px">Campaigns</a>
+    <a class="nav-item" href="dynamics-registration.html" style="padding-left:26px;font-size:12.5px">Registration &amp; Verification</a>
+    <a class="nav-item" href="dynamics-first-deposit.html" style="padding-left:26px;font-size:12.5px">First Deposit &amp; First Bet</a>
+    <a class="nav-item" href="dynamics-retention.html" style="padding-left:26px;font-size:12.5px">Retention</a>
+    <a class="nav-item" href="dynamics-cashback.html" style="padding-left:34px;font-size:12px">Cashback</a>
+    <a class="nav-item" href="dynamics-bonuses.html" style="padding-left:34px;font-size:12px">Bonuses &amp; Tournaments</a>
+    <a class="nav-item" href="dynamics-crm-campaigns.html" style="padding-left:34px;font-size:12px">Communication &amp; CRM</a>
+    <a class="nav-item" href="dynamics-reactivation.html" style="padding-left:26px;font-size:12.5px">Reactivation</a>
+    <a class="nav-item" href="dynamics-vip.html" style="padding-left:26px;font-size:12.5px">VIP Development</a>
+    <a class="nav-section" href="dynamics-tools.html" style="margin-top:14px">Platform Tools &amp; Features</a>
+    <a class="nav-item" href="dynamics-bonus-engine.html" style="padding-left:26px;font-size:12.5px">Bonus Engine</a>
+    <a class="nav-item" href="dynamics-player-engagement.html" style="padding-left:26px;font-size:12.5px">CRM &amp; Engagement</a>
+    <a class="nav-item" href="dynamics-gamification.html" style="padding-left:26px;font-size:12.5px">Gamification</a>
+    <a class="nav-item" href="dynamics-lobby.html" style="padding-left:26px;font-size:12.5px">Lobby &amp; Games</a>
+    <a class="nav-item" href="dynamics-cms.html" style="padding-left:26px;font-size:12.5px">CMS &amp; Promotions</a>
+    <a class="nav-item" href="dynamics-payments-wallets.html" style="padding-left:26px;font-size:12.5px">Payments &amp; Wallets</a>
+    <a class="nav-item" href="dynamics-pam.html" style="padding-left:26px;font-size:12.5px">PAM</a>
+    <a class="nav-item" href="dynamics-reporting.html" style="padding-left:26px;font-size:12.5px">Reporting &amp; Analytics</a>
+    <div class="nav-section" style="margin-top:14px">More</div>
+    <a class="nav-item" href="dynamics-growth.html" style="font-size:13px">Growth &amp; Success Stories</a>
+    <a class="nav-item" href="dynamics-risk.html" style="font-size:13px">Risk &amp; Compliance</a>
+    <a class="nav-item" href="dynamics-migration.html" style="font-size:13px">Migration</a>
+    <div class="nav-section" style="margin-top:14px">General</div>
+    <div class="nav-link nav-soon"><svg viewBox="0 0 14 14"><path d="M7 1L1 5v8h4V9h4v4h4V5z"/></svg>Upcoming Events<span class="nav-soon-tag">SOON</span></div>
+    <div class="nav-link nav-soon"><svg viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" rx="2"/><path d="M4 7h6M4 4.5h6M4 9.5h4"/></svg>Compliance<span class="nav-soon-tag">SOON</span></div>
+  </div>
+  <div class="sidebar__foot"><span class="foot-label">Support</span><a class="foot-email" href="mailto:centrivo@digitain.com">centrivo@digitain.com</a><a class="foot-phone" href="tel:+37460700400">+374 60 700 400</a></div>
+</div>
+<div class="header">
+  <div class="h-btn"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 0 1 6 6c0 2.5-1 4-1 4H3s-1-1.5-1-4a6 6 0 0 1 6-6z"/><path d="M6.3 14a1.7 1.7 0 0 0 3.4 0"/></svg></div>
+  <div class="h-btn"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+  <div class="h-av">MP</div>
+</div>
+<main class="main-page"><div class="main-inner">
+  <div class="breadcrumb"><a href="index.html">Overview</a><span class="bc-sep">/</span><a href="dynamics-player-journey.html">Player Journey</a><span class="bc-sep">/</span><a href="dynamics-acquisition.html">Acquisition</a><span class="bc-sep">/</span><span style="color:var(--text);font-weight:600">Affiliate</span></div>
+  <div id="sol-details">
+    <div class="feature-banner">
+      <div class="fb-left"><div class="fb-glow"></div><div class="fb-icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.2 3.1-5 6.5-5s6 1.8 6.5 5"/><path d="M16.5 12a3 3 0 1 0-1.5-5.6"/><path d="M18.2 15.3c2 .7 3.2 2.3 3.3 4.7"/></svg></div></div>
+      <div class="fb-right">
+        <div class="fb-tag">Digitain iGaming Platform · Acquisition</div>
+        <h1 class="fb-title">Affiliate — From Click to Revenue</h1>
+        <div class="fb-sub"><strong>Performance traffic, measured.</strong> Publishers, streamers, and media buyers paid on performance under three commercial models: CPA, Revenue Share, or Hybrid. The platform runs all three — and everything around them.</div>
+        <a class="fb-btn" href="#" onclick="dgaGate('Affiliate configuration guide');return false">How to configure <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+    <div class="tabs-bar">
+      <button class="t-btn active" onclick="switchTab('platform',this)">The Platform</button>
+      <button class="t-btn" onclick="switchTab('how',this)">How Affiliation Works</button>
+      <button class="t-btn" onclick="switchTab('models',this)">Commission Models</button>
+      <button class="t-btn" onclick="switchTab('run',this)">Running the Programme</button>
+      <button class="t-btn" onclick="switchTab('fraud',this)">Fraud &amp; Protection</button>
+    </div>
+
+    <!-- ============ TAB 1 · THE PLATFORM ============ -->
+    <div class="tab-panel active" id="tab-platform">
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Why Digitain Affiliate</div></div>
+      <div class="widget__body">
+        <p style="font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:14px"><strong style="color:var(--text)">Performance traffic, measured.</strong> Digitain Affiliate unifies affiliate management, multi-layer tracking, and financial reconciliation in a single platform — publishers, streamers, and media buyers paid on performance under CPA, Revenue Share, or Hybrid. The platform runs all three, and everything around them.</p>
+        <div class="aff-pillars">
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4z"/></svg></span>Launch in minutes</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="m12 2 10 6-10 6L2 8z"/><path d="m2 13 10 6 10-6"/></svg></span>Tailored to you</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></span>Seamless migration continuity</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>Built for complex affiliate programmes</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.7 2.7 2.7 15.3 0 18M12 3c-2.7 2.7-2.7 15.3 0 18"/></svg></span>Global support</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span>Continuous localisation and platform upgrades</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5v6c0 4.8-3.2 8-8 10.5C7.2 19.5 4 16.3 4 11.5v-6z"/></svg></span>Advanced fraud protection</div>
+          <div class="aff-pillar dga-anim"><span class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 2v6M15 2v6"/><path d="M6 8h12v3.5a6 6 0 0 1-12 0z"/><path d="M12 17.5V22"/></svg></span>Platform-agnostic API integration</div>
+        </div>
+      </div></div>
+    <div class="widget"><div class="widget__head"><div class="widget__title">Deals &amp; Money — the commercial engine</div></div>
+      <div class="widget__body"><div class="dga-anim"><div class="acc-item open">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Commission Constructor — Any Deal You Can Negotiate</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Flat, progressive, and player-lifetime tiered RevShare on GGR, NGR, turnover, or net deposits. CPA on FTD or cumulative minimum deposits, with minimum-bet qualification. Hybrid plans combine reward types; recurring fixed commissions cover subscriptions and memberships — with 20+ configurable conditions and triggers, scheduled commission assignment, and manual bonuses and deductions.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Tailored Calculation Rules</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Merge or separate CPA and RevShare wallets. Manage negative revenue at programme and affiliate level. Tailor NGR calculations — administrative fees, deposit fees, player balance adjustments — and customize transfer-fee percentages per payment method.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Invoicing &amp; Financial Control</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Commission calculations run on your preferred periods; invoices generate manually or on your chosen schedule, in multiple currencies. Transfer fees and minimum withdrawable thresholds calculate per payment method. Track draft and paid invoices, due and total paid balances; manage cancellations and rollbacks cleanly.</div></div></div></div></div>
+
+    <div class="hl-band dga-anim"><div class="big">130+</div><p><b>Integrated with 130+ external affiliate networks and analytics platforms.</b> Runs natively on the platform and standalone with any gaming stack — your affiliate operation isn't locked in. Prefer a third-party system? Live integrations cover leading affiliate platforms (see <a href="index.html#integrations" style="color:var(--centrivo)">Platform Overview → Integrations</a>).</p></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Tracking &amp; Integrity — every click attributed</div></div>
+      <div class="widget__body"><div class="dga-anim"><div class="acc-item open">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Live Click Tracking</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Real-time click source in the Live Click report — filtered by IP, country, device type, browser, click date, and conversion date. Allow or block traffic by country; drill into click logs to detect potential fraud. The visit-tracking application handles high simultaneous load with high availability and fault tolerance.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Direct Links &amp; Banner Tracking</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Affiliates create direct links per traffic source — no extra parameters, stronger user trust, protected commissions, SEO-friendly backlinks. HTML banner code embeds on their sites and tracks clicks and conversions.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">S2S Postbacks &amp; API</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Postback URLs for admin and affiliates — triggered on registration, FTD, and qualified FTD, with unlimited dynamic parameters and postback logs. Live statistics and fast third-party offer integration without code changes; full reporting data via secure, credential-managed API.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Domain Continuity, JSON Feeds &amp; Smart Link</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Tracking URL redirections are automated on domain changes — previously distributed tracking URLs stay valid and functional for affiliates. JSON Feeds let affiliates get the best products directly from our server, and Smart Link packs all the best offers into one link.</div></div></div></div></div>
+    <div class="widget"><div class="widget__head"><div class="widget__title">Scale &amp; Operations — one flexible system, many brands</div></div>
+      <div class="widget__body"><div class="dga-anim"><div class="acc-item open">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Affiliate Account Management</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Dedicated affiliate manager assignment, manual or automatic account approval, static and dynamic affiliate groups, individual commission plans, per-affiliate negative revenue rules, financial-KPI access control, target market and traffic source assignment — one flexible system built for scalable growth.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Sub-Affiliate Referrer System</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Multi-level sub-affiliate commission tracking with flexible referral commission models. Customize the payment source to your business model, set commission duration from the sub-affiliate's registration date, and keep referral reporting transparent.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Multi-Brand from One Interface</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Track registrations, deposits, turnover, NGR, and profit per brand. Affiliates access all brands with a single account — simplifying management and invoicing, lifting brand exposure and revenue per brand, cutting operational cost.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Global Operations — Currencies, 10+ Languages, Time Zones</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Comfortable currency conversion across a wide range of currencies with instant conversion of financial data. 10+ languages at no additional cost — and a new language of your choice added free. Users adjust their time zone settings to view reports in local time, for a localised affiliate experience.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">User &amp; Role Management</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Customise permissions for user groups and individual users — controlling access to specific pages, features, and data metrics. Every role sees exactly what it should: admins overseeing the platform, affiliate managers running campaigns, affiliates monitoring performance. Admins create specialized accounts for other admins, affiliate managers, and affiliates, with user-specific visibility settings protecting sensitive information.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Mobile-Friendly Experience</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">A web-based application accessible across mobile devices through mobile browsers — fully optimized, mobile-responsive design that displays even heavy reports and interfaces effectively on smaller screens, with secure access via authentication.</div></div></div></div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Marketing the Programme — your brand, their reach</div></div>
+      <div class="widget__body"><div class="dga-anim"><div class="acc-item open">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Campaign Management</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Public or private campaigns with geotargeting per brand and unlimited creatives — including exclusive campaigns for selected affiliates and multi-landing pages. More than 90 financial KPIs analyze each campaign's performance, targeting the right people at the right time.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Creative Management</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">The admin interface hosts any creative type — from .jpg banners to HTML5 content — with predefined and custom frame sizes. HTML files upload quickly and edit in the built-in code editor; creatives assign to campaigns and to individual affiliates, groups, or all affiliates.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Coupon Codes</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Unlimited coupon creation with detailed tracking, expiry dates and usage limits, assigned to specific affiliates or campaigns — promotional discounts that drive engagement and sales.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">White Label &amp; Custom Domains</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Your brand, your logo, your domains — for the affiliate programme and the tracking links. Registration forms are editable for a personalized approach; all automated emails are tailored to carry your voice for a seamless, engaging partner experience.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Affiliate Visit Website Builder</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">An affiliate-facing website managed from the admin back office with an intuitive website builder — no coding required. Customise the interface to your brand identity for an appealing registration experience, and manage dynamic content in multiple languages to communicate the programme's advantages and optimise affiliate onboarding.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Newsletters &amp; Automatic Notifications</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Built-in newsletter tools with predefined templates. Segmentation builds diverse recipient pools — targeting affiliates by performance, behavior triggers, or geographic location — and automated notifications and alerts customise to your business triggers.</div></div></div></div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Prove &amp; Protect — reporting, security, migration</div></div>
+      <div class="widget__body"><div class="dga-anim"><div class="acc-item open">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">The Report Catalog — nine reports per brand</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body"><b style="color:var(--text)">Live Click</b> (clicks, click source, country, device, browser, IP) · <b style="color:var(--text)">Affiliate Link</b> (90+ financial KPIs per link) · <b style="color:var(--text)">Campaign</b> · <b style="color:var(--text)">Banner</b> · <b style="color:var(--text)">Player</b> (betting activity, registration sources) · <b style="color:var(--text)">Audit Logs</b> (chronological record of each activity) · <b style="color:var(--text)">Balance History</b> · <b style="color:var(--text)">Performance per Affiliate</b> (90+ metrics: deposits, bets, GGR, bonuses, chargebacks, third-party fees, NGR, earnings) · <b style="color:var(--text)">Payout</b> (invoice activities, creation date, payment method). All in original and converted currencies, with live updates and CSV export.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Three Dashboards — Operational · Financial · Marketing</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Operational, Financial, and Marketing dashboards with predefined and custom date filters — top affiliates, top players, top countries, top campaigns, ranked by your criteria. Affiliate link reports carry 90+ financial KPIs per link; campaign and banner reports measure what actually converts.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Enterprise-Grade Security</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Granular permission settings, two-factor authentication, password requirement adjustment, login auto-lock, token lifetime settings, unlimited data history, full audit logs — with ISO/IEC 27001 IT security.</div></div><div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">Smooth Migration from Other Platforms</div>
+        <div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+        <div class="acc-body">Migrate with confidence — no downtime, no data loss, full continuity across players, affiliates, and operations: seamless account access transition, media-link transfer, balance and player transfer assurance, domain configuration, and a dedicated support period.</div></div></div></div></div>
+    <div class="widget"><div class="widget__head"><div class="widget__title">Business Value</div></div>
+      <div class="widget__body"><div class="bv-item dga-anim"><div class="bv-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><polyline points='2,12 6,7 10,10 16,3'/></svg></div>
+        <div><div class="bv-title">Complete Visibility and Control</div><div class="bv-desc">Scale acquisition with complete visibility and control: every click attributed, every commission automated, every invoice reconciled.</div></div></div><div class="bv-item dga-anim"><div class="bv-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d='M9 2l5 2v5c0 3.5-2.5 5-5 6C6.5 14 4 12.5 4 9V4z'/><path d='M6.5 9l2 2 3-3'/></svg></div>
+        <div><div class="bv-title">Reduced Operational Overhead</div><div class="bv-desc">Reduced operational overhead, protected commissions, fraud detected early — and a programme your best affiliates prefer to work with.</div></div></div><div class="bv-item dga-anim"><div class="bv-icon">
+        <svg viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><circle cx='9' cy='9' r='7'/><path d='M9 6v3l2 2'/></svg></div>
+        <div><div class="bv-title">Channel-Specific Offers</div><div class="bv-desc">Promo codes pair with affiliate links for channel-specific offers — see <a href="dynamics-campaigns.html" style="color:var(--centrivo)">Campaigns</a>.</div></div></div></div></div>
+    </div>
+
+    <!-- ============ TAB 2 · HOW AFFILIATION WORKS ============ -->
+    <div class="tab-panel" id="tab-how">
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">What affiliate marketing actually is</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Affiliate marketing is <b style="color:var(--text)">performance-based marketing</b>: a third party — the affiliate — promotes an operator's product through its own channels and earns a commission on the result achieved. Payment is for <b style="color:var(--text)">real conversions</b> — a registration, a deposit, actual play — never for impressions or clicks. In plain terms, the affiliate is the operator's <b style="color:var(--text)">&quot;external salesforce&quot;</b>: it directs customers to the casino or sportsbook and earns a reward every time a referred customer completes a target action.</p>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The three-party triangle — click a party to see its role</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <div class="pick-grid" style="grid-template-columns:repeat(3,1fr)">
+          <button class="pick-card on" onclick="triPick('op',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/><path d="M10 21v-3h4v3"/></svg></div><div class="nm">Operator</div><div class="pr">Owns the product</div></button>
+          <button class="pick-card" onclick="triPick('af',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 13z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div><div class="nm">Affiliate</div><div class="pr">Owns the traffic</div></button>
+          <button class="pick-card" onclick="triPick('pl',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.6-3.9 3.7-6 7.5-6s6.9 2.1 7.5 6"/></svg></div><div class="nm">Player</div><div class="pr">Drives the commission</div></button>
+        </div>
+        <div class="pick-out" id="triOut"><div class="po-name"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/><path d="M10 21v-3h4v3"/></svg> The Operator</div><div class="po-body">The product owner — an online casino, sportsbook, poker room, or Live Casino. Wants to attract the maximum number of players at the minimum cost — and launches an affiliate programme to scale acquisition.</div></div>
+      </div></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="prob-card dga-anim"><div class="pc-tag">Industry data</div><div class="feat-desc"><b style="color:var(--text);font-size:20px">74%</b><br>of iGaming operators run affiliate programmes.</div></div>
+      <div class="prob-card dga-anim"><div class="pc-tag">Industry data</div><div class="feat-desc"><b style="color:var(--text);font-size:20px">30–40%</b><br>of new players arrive through the affiliate channel.</div></div>
+      <div class="prob-card dga-anim"><div class="pc-tag">Industry data</div><div class="feat-desc"><b style="color:var(--text)">Affiliates outperform direct advertising</b> — because the operator pays only for results, not for reach.</div></div>
+    </div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Six kinds of affiliate — know who you're dealing with</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <div class="type-grid">
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.7 2.7 2.7 15.3 0 18M12 3c-2.7 2.7-2.7 15.3 0 18"/></svg> SEO / Content sites</div><div class="feat-desc">Review sites, top-lists, &quot;best casinos&quot; blogs — organic traffic, long-term results. Regarded as the highest-quality and most valuable affiliate type.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="m17 2-5 5-5-5"/></svg> Streamers / Influencers</div><div class="feat-desc">YouTube, Twitch, TikTok, Instagram — live streams, videos, social posts. Fast reach into an already-engaged audience.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg> Media buyers</div><div class="feat-desc">Paid advertising (Facebook, Google, native, push) — volume and fast results. Prefer CPA for immediate payouts.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></svg> Telegram / Communities</div><div class="feat-desc">Bonus channels, tipster groups, prediction communities, gambling forums.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6.5L22 7"/></svg> Email marketers</div><div class="feat-desc">Database owners running targeted campaigns to an existing audience.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7.1-7.1L11.7 5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7.1 7.1l1.7-1.7"/></svg> Sub-affiliate networks</div><div class="feat-desc">Networks that aggregate other affiliates under one master account.</div></div>
+        </div>
+      </div></div>
+
+    <div class="disclaim">Benchmarks are illustrative industry figures.</div>
+    </div>
+
+    <!-- ============ TAB 3 · COMMISSION MODELS ============ -->
+    <div class="tab-panel" id="tab-models">
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The four commission models — when and how much you pay</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <div class="model-grid">
+          <div class="model-card dga-anim">
+            <div class="mc-head"><div class="mc-name">CPA — Cost Per Acquisition</div><div class="mc-rate">$50–500+ per player</div></div>
+            <div class="mc-desc">A fixed one-time payout for every referred player who completes the target action — registration plus deposit. <b>The operator bears the risk:</b> if the player leaves quickly, the loss is the operator's. Predictable, immediate, simple to calculate — but the affiliate has <b>no incentive to send quality players once the CPA is paid</b>.</div>
+            <div class="mc-fit">Ideal for: media buyers and paid traffic.</div>
+          </div>
+          <div class="model-card dga-anim">
+            <div class="mc-head"><div class="mc-name">RevShare — Revenue Share</div><div class="mc-rate">Casino 25–60% · Sports 15–40% of NGR</div></div>
+            <div class="mc-desc">A percentage of the NGR generated by referred players, <b>paid every month while the player stays active</b>. Recurring income and a built-in incentive to send quality traffic — but volatile, dependent on player retention, and exposed to negative carryover.</div>
+            <div class="mc-fit">Ideal for: SEO sites, content affiliates, long-term partners.</div>
+          </div>
+          <div class="model-card dga-anim">
+            <div class="mc-head"><div class="mc-name">Hybrid — CPA + RevShare</div><div class="mc-rate">Reduced CPA + typically 10–25% RevShare</div></div>
+            <div class="mc-desc">A reduced one-time CPA <b>plus</b> a reduced monthly RevShare: the affiliate is rewarded for the acquisition and keeps earning from the players' revenue. The most flexible model and a win-win for both sides — but complex to calculate, and it <b>requires a platform that supports multiple models at once</b>.</div>
+            <div class="mc-fit">Ideal for: top affiliates and experienced partners with quality traffic.</div>
+          </div>
+          <div class="model-card dga-anim">
+            <div class="mc-head"><div class="mc-name">Fixed Fee</div><div class="mc-rate">Fixed monthly payment</div></div>
+            <div class="mc-desc">A fixed monthly sum for brand exposure — a placement, banner, review, or listing position. <b>No linkage to results:</b> guaranteed exposure, not guaranteed outcome. Predictable cost for the operator, stable income for the affiliate — with the payback risk sitting on the operator's side.</div>
+            <div class="mc-fit">Ideal for: large media with an established audience.</div>
+          </div>
+        </div>
+        <div class="warn-strip"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M10.3 3.9 2.5 17.5a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4.5M12 17h.01"/></svg> <span><b>The negative carryover nuance.</b> Under RevShare, if a referred player wins big in a given month, the operator takes a loss and the affiliate's balance can go negative — the next month starts in the red. Many affiliates negotiate a &quot;no negative carryover&quot; condition — <b>clarify it in every deal you sign</b>.</span></div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Model matcher — pick the affiliate, get the deal</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <div class="pick-grid" style="grid-template-columns:repeat(4,1fr)">
+          <button class="pick-card on" onclick="matchPick('mb',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg></div><div class="nm">Media buyer</div><div class="pr">Paid ads, fast volume</div></button>
+          <button class="pick-card" onclick="matchPick('seo',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.7 2.7 2.7 15.3 0 18M12 3c-2.7 2.7-2.7 15.3 0 18"/></svg></div><div class="nm">SEO site</div><div class="pr">Organic, long-term</div></button>
+          <button class="pick-card" onclick="matchPick('str',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="m17 2-5 5-5-5"/></svg></div><div class="nm">Streamer</div><div class="pr">Audience reach</div></button>
+          <button class="pick-card" onclick="matchPick('top',this)"><div class="ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><polygon points="12 2.5 14.9 8.6 21.5 9.5 16.7 14.2 17.9 20.8 12 17.6 6.1 20.8 7.3 14.2 2.5 9.5 9.1 8.6"/></svg></div><div class="nm">Top affiliate</div><div class="pr">Proven quality traffic</div></button>
+        </div>
+        <div class="pick-out" id="matchOut"><div class="po-name">Recommended: CPA</div><div class="po-body">Media buyers front their own ad spend and need immediate, predictable payouts per acquisition — a one-time CPA matches their cash cycle.</div></div>
+        <p style="font-size:13px;color:var(--faint);margin-top:10px;font-style:italic">There is no single rule — <b style="color:var(--text)">the model follows the strategy, not the preference.</b></p>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The operator side — what base do you calculate on?</div><span class="guide-badge">From the Digitain bonus management guide</span></div>
+      <div class="widget__body">
+        <table class="gtable">
+          <tr><th>Model</th><th>Calculation base</th><th>Typical rate</th><th>Key characteristic</th></tr>
+          <tr><td><b>Model 1</b></td><td><b>GGR</b> (gross revenue)</td><td>25–35% of GGR</td><td>Simplest calculation. Ignores bonuses and provider costs. Favourable to the affiliate — dangerous for the operator at high bonus budgets.</td></tr>
+          <tr class="hl"><td><b>Model 2</b></td><td><b>NGR</b> (GGR − Bonuses − Payment)</td><td>30–40% of NGR</td><td>Industry standard. Accounts for bonus load. Self-balancing: higher bonus = lower affiliate base.</td></tr>
+          <tr><td><b>Model 3</b></td><td><b>ANGR</b> (GGR − Bonuses − Game − Payment)</td><td>25–40% of ANGR</td><td>Most accurate base. Operator shares provider-cost risk with the affiliate. Rate is higher, but the real GGR burden is minimal.</td></tr>
+        </table>
+        <p style="font-size:13.5px;color:var(--muted);margin:14px 0 10px">The same deal on the same book — GGR €1,000,000, bonuses €250,000 (25%), game provider €120,000 (12%), payment €30,000 (3%). Pick a base:</p>
+        <div class="cc-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+          <button class="cc-pill" style="padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--border);background:white;color:var(--muted);cursor:pointer;font-family:var(--font)" id="baseBtn-ggr" onclick="basePick('ggr')">Model 1 · 30% of GGR</button>
+          <button class="cc-pill" style="padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--centrivo);background:var(--centrivo);color:white;cursor:pointer;font-family:var(--font)" id="baseBtn-ngr" onclick="basePick('ngr')">Model 2 · 35% of NGR</button>
+          <button class="cc-pill" style="padding:6px 11px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--border);background:white;color:var(--muted);cursor:pointer;font-family:var(--font)" id="baseBtn-angr" onclick="basePick('angr')">Model 3 · 35% of ANGR</button>
+        </div>
+        <div class="pick-out" id="baseOut"><div class="po-name">€720,000 × 35% = €252,000 payout — 25.2% of GGR</div><div class="po-body"><b>STANDARD.</b> The NGR base accounts for the bonus load, so the deal self-balances: the more you spend on bonuses, the lower the affiliate base.</div></div>
+        <div class="warn-strip"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg> <span><b>The difference between Model 1 and Model 3 on €1M GGR is up to €90,000 per year</b> — purely from choosing the right calculation base. At €10M GGR, that is €900,000 of additional NetPL.</span></div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The Commission Constructor runs all of them</div></div>
+      <div class="widget__body"><p style="font-size:14.5px;color:var(--muted);line-height:1.75">Whatever deal you negotiate, Digitain Affiliate can compute it: <b style="color:var(--text)">flat, progressive, and player-lifetime tiered RevShare</b> on GGR, NGR, turnover, or net deposits; <b style="color:var(--text)">CPA on FTD or cumulative deposits</b> with minimum-bet qualification; <b style="color:var(--text)">hybrid plans</b> combining reward types; and <b style="color:var(--text)">recurring fixed commissions</b> — with 20+ configurable conditions and triggers, scheduled commission assignment, and manual bonuses and deductions.</p></div></div>
+
+    <div class="disclaim">Benchmarks are illustrative industry figures.</div>
+    </div>
+
+    <!-- ============ TAB 4 · RUNNING THE PROGRAMME ============ -->
+    <div class="tab-panel" id="tab-run">
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The programme lifecycle — five stages, every one backed by the platform</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <div class="dga-flow">
+          <div class="dga-step"><div class="dga-step__num">1</div><div class="aff-stage"><div class="st-t">Recruit</div><div class="st-d">Research channels and directories, personalised outreach and pitches — never mass mail — with a 3–5 touch follow-up sequence. Pre-vet the affiliate's traffic, GEO, and audience.</div><span class="st-tie">Platform: campaigns with geotargeting per brand; target-market and traffic-source assignment.</span></div></div>
+          <div class="dga-step"><div class="dga-step__num">2</div><div class="aff-stage"><div class="st-t">Onboard</div><div class="st-d">KYC and due diligence, tracking links, creative assets, brand and compliance rules, deal signature — and postback testing before the first campaign goes live.</div><span class="st-tie">Platform: editable registration forms, creative hosting, postback logs, manual or automatic account approval.</span></div></div>
+          <div class="dga-step"><div class="dga-step__num">3</div><div class="aff-stage"><div class="st-t">Monitor</div><div class="st-d">Daily FTD, NGR, and conversion-rate checks; traffic-quality analysis for bot signs and fraud patterns; player retention as the long-term value test.</div><span class="st-tie">Platform: Live Click report, 90+ KPIs per link, Operational / Financial / Marketing dashboards.</span></div></div>
+          <div class="dga-step"><div class="dga-step__num">4</div><div class="aff-stage"><div class="st-t">Grow relationships</div><div class="st-d">Regular check-ins, timely alerts about seasonal campaigns, fast resolution of payment and tracking issues, exclusive terms for VIP partners.</div><span class="st-tie">Platform: built-in newsletters with segmentation, exclusive private campaigns for selected affiliates.</span></div></div>
+          <div class="dga-step"><div class="dga-step__num">5</div><div class="aff-stage"><div class="st-t">Negotiate &amp; renew</div><div class="st-d">LTV-based deal structures — CPA must stay below player value — tiered commissions as performance incentives, and an explicit negative-carryover policy.</div><span class="st-tie">Platform: Commission Constructor, individual commission plans, negative revenue controls.</span></div></div>
+        </div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The KPIs that run the programme</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <table class="gtable">
+          <tr><th>KPI</th><th>What it measures</th><th>Why it matters</th></tr>
+          <tr><td><b>FTD</b></td><td>First Time Deposits — players depositing for the first time via an affiliate link</td><td>The headline indicator of programme success. More FTDs = more potential revenue.</td></tr>
+          <tr><td><b>NGR</b></td><td>Net Gaming Revenue from referred players, after bonuses</td><td>The basis of RevShare deals and the real value of the affiliate's traffic.</td></tr>
+          <tr><td><b>CPA Cost</b></td><td>What you pay the affiliate per acquired player</td><td><b>CPA must stay below player LTV</b> — CPA &gt; LTV means a loss-making deal.</td></tr>
+          <tr><td><b>Conversion Rate</b></td><td>Percentage of clicks that become FTDs</td><td>The quality gauge of traffic and landing-page effectiveness.</td></tr>
+          <tr><td><b>Player Retention</b></td><td>Activity of referred players 2–3 months after registration</td><td>Low retention = low traffic quality = low NGR = a bad deal.</td></tr>
+          <tr><td><b>ROI</b></td><td>Commissions paid vs revenue generated</td><td>Positive ROI = success; negative = renegotiate the terms.</td></tr>
+          <tr><td><b>Active Partners</b></td><td>Affiliates generating FTDs this month</td><td>Programme health: <b>60%+ of the portfolio active</b> is the target.</td></tr>
+          <tr><td><b>Chargeback Rate</b></td><td>Percentage of reversed transactions</td><td>A fraud indicator — high chargeback points to synthetic traffic.</td></tr>
+        </table>
+        <div class="warn-strip"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><polygon points="7.9 2 16.1 2 22 7.9 22 16.1 16.1 22 7.9 22 2 16.1 2 7.9"/><path d="M12 7.5V13M12 16.5h.01"/></svg> <span><b>The alarm signal:</b> traffic keeps flowing but FTD falls — traffic quality is degrading. Likely causes: bot traffic, bonus abusers, or low-intent users. Daily monitoring catches it immediately.</span></div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">Where affiliate deals happen — the conference calendar</div><span class="guide-badge">From the Gaming Academy affiliate guide</span></div>
+      <div class="widget__body">
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px">Face-to-face builds relationships <b style="color:var(--text)">3–5× faster</b> than online — many deals are signed at the events themselves.</p>
+        <div class="chip-row">
+          <span class="chip"><b>iGB Affiliate London</b> — recruitment gold mine, January</span>
+          <span class="chip"><b>SiGMA Malta</b> — the industry's biggest event, November</span>
+          <span class="chip"><b>SBC Summit</b> — sports betting focus, September</span>
+          <span class="chip"><b>Affiliate World</b> — key for media buyers &amp; SEO</span>
+          <span class="chip"><b>CasinoBeats Summit</b> — casino product &amp; partnerships</span>
+        </div>
+      </div></div>
+
+    <div class="disclaim">Benchmarks are illustrative industry figures.</div>
+    </div>
+
+    <!-- ============ TAB 5 · FRAUD & PROTECTION ============ -->
+    <div class="tab-panel" id="tab-fraud">
+
+    <div class="hl-band warn dga-anim"><div class="big">20–25%</div><p><b>Industry data: up to 20–25% of iGaming affiliate traffic contains elements of fraud</b> — and up to <b>40%</b> for new operators without verification systems. Affiliate fraud is the deliberate extraction of partner commissions without delivering quality traffic.</p></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">The 8 affiliate fraud schemes — mechanism and key defenses</div><span class="guide-badge">From the Digitain bonus management guide</span></div>
+      <div class="widget__body">
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">1 · Self-Referral</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> the affiliate registers as a player via their own link — collecting the welcome bonus and a CPA for &quot;acquiring&quot; themselves. CPA €60 + €150 bonus = €210 lost per fake self-referral, with zero real acquisition; a 50-account ring means €10,500+.<br><b style="color:var(--text)">Key defenses:</b> cross-reference payment details of affiliate and referrals, KYC both parties, device fingerprinting between affiliate panel and player account, 30-day CPA payment delay.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">2 · Fake Leads</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> purchased email/phone databases or bots drive mass registrations; accounts make a minimal deposit and vanish. CPA €40 × 500 fake FTDs = <b style="color:var(--text)">€20,000</b> paid out against €200–500 of real GGR.<br><b style="color:var(--text)">Key defenses:</b> delayed CPA — pay after 30–60 days only on real activity (minimum deposits, minimum GGR threshold); quality score per affiliate; auto-block when churn exceeds 80%.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">3 · Cookie Stuffing</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> tracking cookies planted on users' devices without their knowledge — via iframes, pop-ups, ad networks — so the affiliate collects RevShare on organic players. One such affiliate can &quot;claim&quot; 10–20% of organic traffic.<br><b style="color:var(--text)">Key defenses:</b> server-to-server tracking instead of cookie-based, monitoring anomalous tracking/conversion ratios, last-click attribution with source verification, regular traffic audits.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">4 · Incentivised Traffic</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> the affiliate pays users to register (&quot;€10 for signing up&quot;); they deposit the minimum with no genuine interest. LTV of such players: zero; churn after first deposit: 95%+.<br><b style="color:var(--text)">Key defenses:</b> prohibit incentivised traffic in the agreement with financial penalties, monitor 30-day behaviour (churn &gt;90% from a source triggers review), set a minimum GGR-per-FTD quality threshold as a CPA condition.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">5 · Brand Bidding</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> the affiliate buys search ads on your own brand keywords — users already looking for you click the ad and register through the affiliate link. <b style="color:var(--text)">Up to 30–40% of &quot;new&quot; FTDs in some regions are actually brand traffic</b> — you pay RevShare for your own loyal users.<br><b style="color:var(--text)">Key defenses:</b> prohibit brand bidding in the agreement, monitor search ads, file trademark claims, audit UTM parameters, verify referral sources automatically at registration.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">6 · RevShare Manipulation via Player Selection</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> the affiliate deliberately directs large winners to accumulate a negative balance, expecting it to be &quot;reset&quot; without carryover — then starts fresh next month and collects full RevShare again.<br><b style="color:var(--text)">Key defenses:</b> a strict negative carryover policy (negative balance always carried forward), cap monthly RevShare for new affiliates in the first 6 months, cap RevShare from any single player.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">7 · Sub-Affiliate Fraud (Multi-Tier)</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> a master affiliate builds a sub-affiliate network in which some members run fraudulent schemes — the master earns an override commission while its own account looks clean; 10 fraudulent subs out of 50 can mean 20–30% fraudulent traffic.<br><b style="color:var(--text)">Key defenses:</b> contractual liability — the master answers for all sub-affiliate traffic; KYC for sub-affiliates above volume thresholds; the operator's right to audit the entire chain.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)"><div class="acc-title">8 · Geo-Fraud</div><div class="acc-chevron"><svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></div></div>
+          <div class="acc-body"><b style="color:var(--text)">Mechanism:</b> the affiliate agrees a high Tier-1 CPA (€80–150), then delivers Tier-3 traffic behind VPN/proxy to fake the GEO — the CPA difference is pure profit. 200 fake Tier-1 FTDs can mean <b style="color:var(--text)">£18,000+ in losses</b>.<br><b style="color:var(--text)">Key defenses:</b> GEO verification via billing address, phone prefix, IP geolocation, and document origin at KYC; delay CPA until KYC completes; monitor anomalous GEO distribution per affiliate.</div></div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">What every affiliate agreement must contain</div><span class="guide-badge">From the Digitain bonus management guide</span></div>
+      <div class="widget__body">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Prohibition of all schemes</div><div class="feat-desc">Every listed fraud scheme explicitly banned in the contract.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Audit rights</div><div class="feat-desc">The operator's right to audit traffic — including the entire sub-affiliate chain.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Clawback clause</div><div class="feat-desc">Commission recovery upon fraud detection, up to 12 months back.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Negative carryover policy</div><div class="feat-desc">Explicitly agreed — negative balances carried forward, not silently reset.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Quality KPIs</div><div class="feat-desc">Traffic-quality thresholds with the right to reduce RevShare when they are missed.</div></div>
+          <div class="prob-card dga-anim"><div class="pc-tag">✓ Delayed CPA</div><div class="feat-desc">Payment after 30–60 days, released only on real player activity.</div></div>
+        </div>
+      </div></div>
+
+    <div class="widget"><div class="widget__head"><div class="widget__title">What Digitain Affiliate gives you against all of this</div></div>
+      <div class="widget__body"><p style="font-size:14.5px;color:var(--muted);line-height:1.75"><b style="color:var(--text)">Live Click fraud drill-down</b> — click logs filtered by IP, country, device type, browser, click and conversion date · <b style="color:var(--text)">country allow/block controls</b> on traffic · <b style="color:var(--text)">postback logs</b> for tracking verification · <b style="color:var(--text)">granular permissions</b> and user-specific visibility · <b style="color:var(--text)">chronological audit logs</b> of every activity in the system · <b style="color:var(--text)">two-factor authentication</b> with login auto-lock and token lifetime settings. Fraud detected early is commission protected.</p></div></div>
+
+    <a class="risk-card dga-anim" href="dynamics-risk.html"><div style="font-size:26px"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5v6c0 4.8-3.2 8-8 10.5C7.2 19.5 4 16.3 4 11.5v-6z"/></svg></div><div><div style="font-size:14.5px;font-weight:700;color:var(--text)">The platform&apos;s Risk &amp; Fraud toolset</div><div style="font-size:12.5px;color:var(--muted);margin-top:2px">Multi-account detection, deposit anomaly detection, player-level blocking — platform-wide risk tools beyond the affiliate module.</div></div><div style="margin-left:auto;color:var(--centrivo);font-weight:700">Explore →</div></a>
+
+    <div class="disclaim">Benchmarks are illustrative industry figures.</div>
+    </div>
+
+    <div class="dga-doc dga-anim"><div class="dga-doc__icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5z"/><path d="M20 17v5H6.5a2.5 2.5 0 0 1-2.5-2.5"/></svg></div><div><div class="dga-doc__title">Affiliate Manager guide — Gaming Academy</div><div class="dga-doc__sub">From affiliate types to deal negotiation — the full guide.</div></div><button class="dga-doc__btn" onclick="dgaGate('Affiliate Manager guide — Gaming Academy')">Request →</button></div>
+    <div class="dga-doc dga-anim"><div class="dga-doc__icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></div><div><div class="dga-doc__title">Digitain Affiliate product deck v3.0</div><div class="dga-doc__sub">Every module of the affiliate platform, in detail.</div></div><button class="dga-doc__btn" onclick="dgaGate('Digitain Affiliate product deck v3.0')">Request →</button></div>
+    <div class="widget"><div class="widget__head"><div class="widget__title">Actions</div></div>
+      <div class="widget__body">
+        <div class="dga-next">
+          <a class="dga-next__card dga-anim" href="dynamics-campaigns.html"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Campaigns</div><div class="dga-next__s">The acquisition &amp; activation hub.</div></a>
+          <a class="dga-next__card dga-anim" href="dynamics-bonus-engine.html"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Bonus Engine</div><div class="dga-next__s">Your promotional budget, under control.</div></a>
+          <a class="dga-next__card dga-anim" href="index.html#integrations"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Platform Overview → Integrations</div><div class="dga-next__s">One Platform. Every Market. Complete Control.</div></a>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="fb-btn" href="#" onclick="dgaGate('Activation request');return false">Request activation</a>
+          <a class="fb-btn" href="#" onclick="dgaGate('A conversation with your Account Manager');return false">Contact your Account Manager</a>
+          <a class="fb-btn" href="#">Open a ticket</a>
+        </div>
+      </div></div>
+  </div>
+</div></main>
+<script>
+function switchTab(id,btn){var p=document.getElementById("tab-"+id);if(!p||!btn)return;document.querySelectorAll(".tab-panel").forEach(function(x){x.classList.remove("active")});document.querySelectorAll(".t-btn").forEach(function(b){b.classList.remove("active")});p.classList.add("active");btn.classList.add("active");}
+function toggleAcc(h){if(h&&h.parentElement)h.parentElement.classList.toggle("open");}
+
+/* ===== Three-party triangle (Tab 2) ===== */
+var TRI={
+  op:{n:'<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/><path d="M10 21v-3h4v3"/></svg> The Operator',b:'The product owner — an online casino, sportsbook, poker room, or Live Casino. Wants to attract the maximum number of players at the minimum cost — and launches an affiliate programme to scale acquisition.'},
+  af:{n:'<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 13z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg> The Affiliate (Partner)',b:'The traffic source — a website, blog, YouTube channel, Telegram group, influencer, or media buyer. Uses its own channels to direct traffic to the operator and earns a commission on the results.'},
+  pl:{n:'<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.6-3.9 3.7-6 7.5-6s6.9 2.1 7.5 6"/></svg> The Player',b:'The end audience — the user who clicks the affiliate\'s link, registers, and deposits on the operator\'s site. The player\'s activity determines the size of the commission.'}
+};
+function triPick(k,btn){
+  var d=TRI[k];if(!d)return;
+  if(btn&&btn.parentElement){var cs=btn.parentElement.querySelectorAll('.pick-card');for(var i=0;i<cs.length;i++){cs[i].classList.remove('on');}btn.classList.add('on');}
+  var o=document.getElementById('triOut');
+  if(o){o.innerHTML='<div class="po-name">'+d.n+'</div><div class="po-body">'+d.b+'</div>';}
+}
+
+/* ===== Model matcher (Tab 3) ===== */
+var MATCH={
+  mb:{n:'Recommended: CPA',b:'Media buyers front their own ad spend and need immediate, predictable payouts per acquisition — a one-time CPA matches their cash cycle.'},
+  seo:{n:'Recommended: RevShare or Hybrid',b:'Organic content traffic is long-term by nature — a recurring share of NGR rewards quality and keeps compounding while the players stay active.'},
+  str:{n:'Recommended: Fixed + CPA',b:'An established audience gives guaranteed exposure — a fixed placement fee plus a CPA per acquired player fits the reach-driven format.'},
+  top:{n:'Recommended: Hybrid',b:'Proven quality traffic earns both an upfront CPA and an ongoing RevShare — the win-win structure for your most valuable partners.'}
+};
+function matchPick(k,btn){
+  var d=MATCH[k];if(!d)return;
+  if(btn&&btn.parentElement){var cs=btn.parentElement.querySelectorAll('.pick-card');for(var i=0;i<cs.length;i++){cs[i].classList.remove('on');}btn.classList.add('on');}
+  var o=document.getElementById('matchOut');
+  if(o){o.innerHTML='<div class="po-name">'+d.n+'</div><div class="po-body">'+d.b+'</div>';}
+}
+
+/* ===== Calculation-base comparison (Tab 3) ===== */
+var BASE={
+  ggr:{n:'€1,000,000 × 30% = €300,000 payout — 30% of GGR',b:'<b>HIGH BURDEN.</b> The gross base ignores your bonus and provider costs entirely — favourable to the affiliate, dangerous for the operator at high bonus budgets.'},
+  ngr:{n:'€720,000 × 35% = €252,000 payout — 25.2% of GGR',b:'<b>STANDARD.</b> The NGR base accounts for the bonus load, so the deal self-balances: the more you spend on bonuses, the lower the affiliate base.'},
+  angr:{n:'€600,000 × 35% = €210,000 payout — 21.0% of GGR',b:'<b>OPTIMAL.</b> The most accurate base — the affiliate shares provider-cost risk. The headline rate is higher, but the real GGR burden is minimal.'}
+};
+function basePick(k){
+  var d=BASE[k];if(!d)return;
+  ['ggr','ngr','angr'].forEach(function(x){
+    var b=document.getElementById('baseBtn-'+x);if(!b)return;
+    if(x===k){b.style.background='var(--centrivo)';b.style.borderColor='var(--centrivo)';b.style.color='white';}
+    else{b.style.background='white';b.style.borderColor='var(--border)';b.style.color='var(--muted)';}
+  });
+  var o=document.getElementById('baseOut');
+  if(o){o.innerHTML='<div class="po-name">'+d.n+'</div><div class="po-body">'+d.b+'</div>';}
+}
+</script>
+<!-- ===== DGA ENGAGEMENT LAYER v1 START (identical on every page) ===== -->
+<style id="dga-css">
+.dga-flow{display:flex;overflow-x:auto;padding:10px 2px 16px;gap:0}
+.dga-step{flex:1;min-width:148px;position:relative;padding:0 9px}
+.dga-step:not(:first-child)::before{content:"";position:absolute;left:-14px;top:15px;width:28px;height:2px;background:linear-gradient(90deg,#CBD5E1,var(--centrivo,#0F766E))}
+.dga-step__num{width:32px;height:32px;border-radius:50%;background:var(--centrivo,#0F766E);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:0 0 0 5px rgba(15,118,110,.12)}
+a.dga-step__card{display:block;background:#fff;border:1px solid var(--border,#E4E7EF);border-radius:14px;padding:13px 14px;min-height:118px;text-decoration:none;transition:all .18s}
+a.dga-step__card:hover{transform:translateY(-3px);border-color:var(--centrivo,#0F766E);box-shadow:0 8px 22px rgba(15,118,110,.14)}
+.dga-step__t{font-size:14px;font-weight:700;color:var(--text,#111827);margin-bottom:5px;line-height:1.3}
+.dga-step__d{font-size:12.5px;color:var(--muted,#6B7280);line-height:1.55}
+.dga-step__go{display:inline-block;font-size:12px;font-weight:700;color:var(--centrivo,#0F766E);margin-top:8px}
+.dga-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+a.dga-chip{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--border,#E4E7EF);border-radius:12px;padding:12px 14px;text-decoration:none;transition:all .16s}
+a.dga-chip:hover{border-color:var(--centrivo,#0F766E);transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,118,110,.12)}
+.dga-chip__ic{font-size:20px;line-height:1}
+.dga-chip__n{font-size:13.5px;font-weight:700;color:var(--text,#111827)}
+.dga-chip__s{font-size:12px;color:var(--muted,#6B7280);margin-top:2px;line-height:1.45}
+.dga-chip__arrow{margin-left:auto;color:var(--centrivo,#0F766E);font-weight:700;font-size:14px}
+.dga-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
+a.dga-next__card{background:linear-gradient(160deg,#FFFFFF,#F0FDFA);border:1px solid var(--border,#E4E7EF);border-radius:12px;padding:13px 15px;text-decoration:none;transition:all .16s;display:block}
+a.dga-next__card:hover{border-color:var(--centrivo,#0F766E);transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,118,110,.14)}
+.dga-next__lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--centrivo,#0F766E);margin-bottom:4px}
+.dga-next__t{font-size:14px;font-weight:700;color:var(--text,#111827);margin-bottom:3px}
+.dga-next__s{font-size:12px;color:var(--muted,#6B7280);line-height:1.45}
+.dga-doc{display:flex;align-items:center;gap:14px;background:#0E1117;border-radius:14px;padding:16px 18px;margin:0 0 16px}
+.dga-doc__icon{font-size:26px}
+.dga-doc__title{font-size:14.5px;font-weight:700;color:#fff}
+.dga-doc__sub{font-size:12.5px;color:rgba(255,255,255,.78);margin-top:2px}
+.dga-doc__btn{margin-left:auto;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:13px;font-weight:700;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:background .15s}
+.dga-doc__btn:hover{background:#134E4A}
+.dga-anim{opacity:0;transform:translateY(10px)}
+.dga-in{opacity:1;transform:none;transition:opacity .5s ease var(--d,0s),transform .5s ease var(--d,0s)}
+.dga-progress{padding:12px 14px;border-top:1px solid rgba(255,255,255,.06);margin-top:10px}
+.dga-progress__label{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px;letter-spacing:.05em}
+.dga-progress__label b{color:#5EEAD4}
+.dga-progress__bar{height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.dga-progress__bar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#0F766E,#5EEAD4);transition:width .6s ease}
+.nav-item.dga-seen{position:relative}
+.nav-item.dga-seen::after{content:"✓";position:absolute;right:12px;color:#5EEAD4;font-size:11px;font-weight:700}
+.dga-toast{position:fixed;left:18px;bottom:18px;z-index:250;max-width:300px;background:#0E1117;border-left:3px solid #5EEAD4;border-radius:10px;padding:13px 16px;color:#fff;font-size:13.5px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);transition:all .35s}
+.dga-toast.dga-on{opacity:1;transform:none}
+.dga-fab{position:fixed;right:22px;bottom:20px;z-index:200;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:24px;font-family:inherit;font-size:13.5px;font-weight:700;padding:11px 20px;cursor:pointer;box-shadow:0 8px 24px rgba(15,118,110,.4);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .3s}
+.dga-fab.dga-on{opacity:1;pointer-events:auto;transform:none}
+.dga-fab:hover{background:#134E4A}
+.dga-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(14,17,23,.55);backdrop-filter:blur(2px)}
+.dga-modal[hidden]{display:none}
+.dga-modal__card{width:400px;max-width:92vw;background:#fff;border-radius:18px;padding:26px 26px 22px;position:relative;font-family:inherit}
+.dga-modal__x{position:absolute;top:12px;right:14px;border:none;background:none;font-size:18px;color:var(--muted,#6B7280);cursor:pointer}
+.dga-modal__icon{font-size:30px;margin-bottom:8px}
+.dga-modal__t{font-size:16px;font-weight:700;color:var(--text,#111827);margin-bottom:6px}
+.dga-modal__d{font-size:13.5px;color:var(--muted,#6B7280);line-height:1.6;margin-bottom:14px}
+.dga-modal__input{width:100%;border:1px solid var(--border,#E4E7EF);border-radius:9px;padding:10px 12px;font-family:inherit;font-size:13.5px;margin-bottom:10px;outline:none}
+.dga-modal__input:focus{border-color:var(--centrivo,#0F766E)}
+.dga-modal__btn{width:100%;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:14px;font-weight:700;padding:11px;cursor:pointer}
+.dga-modal__btn:hover{background:#134E4A}
+.dga-modal__ok{display:none;text-align:center;padding:8px 0 2px}
+.dga-modal__ok .big{font-size:34px;margin-bottom:8px}
+.dga-modal__ok p{font-size:14px;color:var(--text,#111827);line-height:1.6}
+@media (prefers-reduced-motion:reduce){.dga-anim,.dga-in,.dga-toast,.dga-fab{transition:none}.dga-anim{opacity:1;transform:none}}
+
+/* ===== NAV v2 (clarity upgrade) ===== */
+.sidebar__nav{padding:10px 0 14px}
+.sidebar__nav .nav-section{display:flex;align-items:center;font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.68);padding:0 16px;margin:16px 0 6px}
+.sidebar__nav .nav-section.dga-grp{cursor:pointer;-webkit-user-select:none;user-select:none;transition:color .15s}
+.sidebar__nav .nav-section.dga-grp:hover{color:rgba(255,255,255,.85)}
+.sidebar__nav .nav-section.dga-grp::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-left:auto;margin-right:3px;transition:transform .2s}
+.sidebar__nav .nav-section.dga-grp.dga-closed::after{transform:rotate(-45deg)}
+.sidebar__nav .nav-item{font-size:13px !important;padding:7px 12px !important;margin:1px 8px;border-radius:8px;border-left:none !important;line-height:1.35;color:rgba(255,255,255,.78)}
+.sidebar__nav .nav-item.nv-d1,.sidebar__nav .nav-item.nv-d2{margin-left:22px;border-left:1px solid rgba(255,255,255,.09) !important;border-radius:0 8px 8px 0;padding-left:12px !important}
+.sidebar__nav .nav-item.nv-d2{margin-left:34px;font-size:12.5px !important;color:rgba(255,255,255,.62)}
+.sidebar__nav .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sidebar__nav .nav-item.active{background:linear-gradient(90deg,rgba(15,118,110,.95),rgba(15,118,110,.55));color:#fff !important;font-weight:600;box-shadow:0 2px 10px rgba(15,118,110,.35)}
+.sidebar__nav .nav-item.dga-hidden{display:none}
+.nav-item.dga-seen::after{right:10px}
+
+/* ===== NAV v3: linked section headers ===== */
+.sidebar__nav a.nav-section{text-decoration:none;cursor:pointer}
+.sidebar__nav a.nav-section:hover{color:rgba(255,255,255,.9)}
+.sidebar__nav a.nav-section.on{color:#5EEAD4}
+.sidebar__nav a.nav-section .dga-tog{margin-left:auto;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.sidebar__nav a.nav-section .dga-tog::before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+.sidebar__nav a.nav-section:hover .dga-tog{background:rgba(255,255,255,.1)}
+.sidebar__nav a.nav-section.dga-closed .dga-tog::before{transform:rotate(-45deg)}
+
+/* DGA FLAGSHIP PASS v1 */
+.sidebar,.sidebar *{font-family:var(--font-cond)}
+.nav-soon,.nav-soon:hover{color:rgba(255,255,255,.35);cursor:default}
+.nav-soon-tag{margin-left:auto;font-size:8.5px;font-weight:700;letter-spacing:.09em;background:rgba(255,255,255,.09);color:rgba(255,255,255,.5);padding:2px 6px;border-radius:6px;flex-shrink:0}
+
+/* DGA FLAGSHIP PASS v2: icons+semantics */
+.dgi{width:1em;height:1em;display:inline-block;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.fb-icon,.section-card__icon{color:#fff}
+.dga-chip__ic{color:var(--centrivo,#0F766E)}
+h1,h2{margin:0;font:inherit}
+a.foot-email,a.foot-phone{display:block;text-decoration:none}
+a.foot-email:hover,a.foot-phone:hover{color:#fff}
+
+/* DGA SEARCH v1 */
+.dse-wrap{padding:12px 12px 2px}
+.dse-btn{width:100%;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:8px 11px;color:rgba(255,255,255,.55);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-cond);transition:all .15s}
+.dse-btn:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.85)}
+.dse-btn .dgi{width:13px;height:13px}
+.dse-btn__kbd{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.05em;background:rgba(255,255,255,.09);border-radius:5px;padding:2px 6px;color:rgba(255,255,255,.4)}
+.dse-ov{position:fixed;inset:0;background:rgba(10,14,20,.55);z-index:1300;display:none;align-items:flex-start;justify-content:center;padding:11vh 16px 16px}
+.dse-ov.on{display:flex}
+.dse-card{width:580px;max-width:94vw;background:#fff;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.35);overflow:hidden;font-family:var(--font)}
+.dse-top{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.dse-top .dgi{color:var(--muted);width:17px;height:17px;flex-shrink:0}
+.dse-in{flex:1;border:none;outline:none;font-size:15.5px;font-family:var(--font);color:var(--text);background:transparent}
+.dse-esc{font-size:10px;font-weight:700;color:var(--faint);border:1px solid var(--border);border-radius:5px;padding:2px 6px;cursor:pointer}
+.dse-res{max-height:46vh;overflow-y:auto}
+.dse-r{padding:10px 18px;cursor:pointer;border-bottom:1px solid var(--surface)}
+.dse-r.on{background:var(--centrivo-light)}
+.dse-r__p{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--centrivo);margin-bottom:2px}
+.dse-r__h{font-size:14px;font-weight:600;color:var(--text)}
+.dse-r__x{font-size:12px;color:var(--muted);margin-top:1px;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dse-r mark{background:rgba(15,118,110,.16);color:var(--centrivo2);border-radius:3px;padding:0 1px}
+.dse-empty{padding:22px 18px;font-size:13.5px;color:var(--muted);text-align:center}
+.dse-foot{display:flex;gap:14px;padding:9px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--faint)}
+</style>
+<div class="dga-modal" id="dgaModal" hidden>
+  <div class="dga-modal__card">
+    <button class="dga-modal__x" onclick="dgaClose()">✕</button>
+    <div id="dgaForm">
+      <div class="dga-modal__icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></div>
+      <div class="dga-modal__t" id="dgaTitle">Request</div>
+      <div class="dga-modal__d">Prepared for partners and delivered personally. Send a request and your Account Manager will follow up with the full material.</div>
+      <input class="dga-modal__input" id="dgaMail" type="email" placeholder="you@company.com">
+      <button class="dga-modal__btn" onclick="dgaSend()">Send request</button>
+    </div>
+    <div class="dga-modal__ok" id="dgaOk"><div class="big"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.5 2.7 4.5-5.5"/></svg></div><p><b>Request noted.</b><br>Your Account Manager will follow up shortly.</p></div>
+  </div>
+</div>
+<script id="dga-js">
+(function(){
+  var LS={get:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  var here=(location.pathname.split('/').pop()||'index.html');
+  var visited=LS.get('dgd.visited',[]);
+  if(visited.indexOf(here)<0){visited.push(here);LS.set('dgd.visited',visited);}
+  var items=[].slice.call(document.querySelectorAll('.sidebar__nav .nav-item'));
+  var hrefs=items.map(function(a){return a.getAttribute('href')});
+  items.forEach(function(a){if(visited.indexOf(a.getAttribute('href'))>=0)a.classList.add('dga-seen')});
+  var seen=hrefs.filter(function(h){return visited.indexOf(h)>=0}).length;
+  var nav=document.querySelector('.sidebar__nav');
+  if(nav){var p=document.createElement('div');p.className='dga-progress';p.innerHTML='<div class="dga-progress__label">EXPLORED <b>'+seen+'</b> / '+hrefs.length+'</div><div class="dga-progress__bar"><i style="width:'+Math.round(seen/hrefs.length*100)+'%"></i></div>';nav.appendChild(p);}
+  var anims=[].slice.call(document.querySelectorAll('.dga-anim'));
+  if('IntersectionObserver' in window && anims.length){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('dga-in');io.unobserve(e.target)}})},{threshold:.15});
+    anims.forEach(function(el,i){el.style.setProperty('--d',(i%8)*.09+'s');io.observe(el)});
+  } else {anims.forEach(function(el){el.classList.add('dga-in')})}
+  function toast(msg){var t=document.createElement('div');t.className='dga-toast';t.innerHTML=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('dga-on')});setTimeout(function(){t.classList.remove('dga-on');setTimeout(function(){t.remove()},400)},6500);}
+  var shown=LS.get('dgd.toasts',[]);
+  function once(id,msg){if(shown.indexOf(id)<0){shown.push(id);LS.set('dgd.toasts',shown);setTimeout(function(){toast(msg)},900);return true}return false}
+  var J=['dynamics-acquisition.html','dynamics-affiliate.html','dynamics-referral.html','dynamics-campaigns.html','dynamics-registration.html','dynamics-first-deposit.html','dynamics-retention.html','dynamics-cashback.html','dynamics-bonuses.html','dynamics-crm-campaigns.html','dynamics-reactivation.html','dynamics-vip.html'];
+  var T=['dynamics-bonus-engine.html','dynamics-player-engagement.html','dynamics-gamification.html','dynamics-lobby.html','dynamics-cms.html','dynamics-payments-wallets.html','dynamics-pam.html','dynamics-reporting.html'];
+  function all(list){return list.every(function(f){return visited.indexOf(f)>=0})}
+  if(visited.length===1){once('hello','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11.5V16"/></svg> <b>Tip:</b> pages you visit get a ✓ in the menu. Explore the full journey — it pays off.')}
+  else if(all(J)&&all(T)&&hrefs.every(function(h){return visited.indexOf(h)>=0})){once('all','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 18h18"/><path d="m4 15-1-8 5 3 4-6 4 6 5-3-1 8z"/></svg> <b>Full platform explored.</b> Your Account Manager owes you a coffee — ask for it.')}
+  else if(all(J)){once('journey','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 22V3"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg> <b>Player Journey explored end-to-end.</b> Ask your Account Manager for the full playbook.')}
+  else if(all(T)){once('tools','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg> <b>Every tool in the box — seen.</b> Time to put them to work on your brand.')}
+  var fab=document.createElement('button');fab.className='dga-fab';fab.textContent='Request activation';fab.onclick=function(){dgaGate('Activation request')};document.body.appendChild(fab);
+  window.addEventListener('scroll',function(){fab.classList.toggle('dga-on',window.scrollY>480)},{passive:true});
+  var modal=document.getElementById('dgaModal');
+  window.dgaGate=function(title){document.getElementById('dgaTitle').textContent=title;document.getElementById('dgaForm').style.display='block';document.getElementById('dgaOk').style.display='none';modal.hidden=false;};
+  window.dgaClose=function(){modal.hidden=true;};
+  window.dgaSend=function(){document.getElementById('dgaForm').style.display='none';document.getElementById('dgaOk').style.display='block';};
+  modal.addEventListener('click',function(e){if(e.target===modal)dgaClose()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)dgaClose()});
+})();
+
+/* NAV v3: depth classes + linked headers + collapse-by-default */
+(function(){
+  var nav=document.querySelector('.sidebar__nav'); if(!nav) return;
+  var here=(location.pathname.split('/').pop()||'index.html');
+  [].forEach.call(nav.querySelectorAll('.nav-item'),function(a){
+    var m=(a.getAttribute('style')||'').match(/padding-left:\s*(\d+)/);
+    var pl=m?parseInt(m[1],10):0;
+    a.classList.add('nv-d'+(pl>=34?2:(pl>=26?1:0)));
+  });
+  [].forEach.call(nav.querySelectorAll('a.nav-section'),function(h){
+    if(h.getAttribute('href')===here)h.classList.add('on');
+  });
+  var state={};try{state=JSON.parse(localStorage.getItem('dgd.nav')||'{}')||{}}catch(e){}
+  var sections=[].slice.call(nav.querySelectorAll('.nav-section'));
+  sections.forEach(function(h){
+    var items=[],el=h.nextElementSibling;
+    while(el&&!el.classList.contains('nav-section')&&!el.classList.contains('dga-progress')){
+      if(el.classList.contains('nav-item')||el.classList.contains('nav-link'))items.push(el);
+      el=el.nextElementSibling;
+    }
+    var key=(h.textContent||'').trim();
+    if(items.length<3||key==='General')return;
+    var isLink=(h.tagName==='A');
+    var hasActive=items.some(function(i){return i.classList.contains('active')})||(isLink&&h.getAttribute('href')===here);
+    var closed=(key in state)?!!state[key]:true;
+    if(hasActive)closed=false;
+    function apply(){h.classList.toggle('dga-closed',closed);items.forEach(function(i){i.classList.toggle('dga-hidden',closed)});}
+    apply();
+    function flip(){closed=!closed;state[key]=closed;try{localStorage.setItem('dgd.nav',JSON.stringify(state))}catch(err){}apply();}
+    if(isLink){
+      var tg=document.createElement('span');tg.className='dga-tog';
+      tg.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();flip();});
+      h.appendChild(tg);
+    } else {
+      h.classList.add('dga-grp');
+      h.addEventListener('click',flip);
+    }
+  });
+})();
+</script>
+<!-- ===== DGA ENGAGEMENT LAYER v1 END ===== -->
+
+<!-- ===== DGA SEARCH v1 ===== -->
+<div class="dse-ov" id="dseOv" onclick="if(event.target===this)dseClose()">
+  <div class="dse-card">
+    <div class="dse-top"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m15.8 15.8 5.2 5.2"/></svg><input class="dse-in" id="dseIn" placeholder="Search the Client Area&hellip;" autocomplete="off"><span class="dse-esc" onclick="dseClose()">ESC</span></div>
+    <div class="dse-res" id="dseRes"></div>
+    <div class="dse-foot"><span>&uarr;&darr; navigate</span><span>&crarr; open</span><span>esc close</span></div>
+  </div>
+</div>
+<script>
+var DGA_IDX = [{"u":"dynamics-acquisition.html","t":"Acquisition","k":"acquisition everything need acquire activate platform math digitain bonus guides ltv cac ratio casino norm where players come three routes funnel pick explore affiliate channel","s":[["Acquisition","Everything you need to acquire and activate — in one platform."],["The acquisition math","From the Digitain bonus guides ≥ 3× LTV / CAC ratio · casino norm 4–6×…"],["Where players come from","Three routes into the funnel — pick one to explore Affiliate channel R…"]]},{"u":"dynamics-affiliate.html","t":"Affiliate","k":"affiliate click revenue performance traffic measured publishers streamers media buyers why digitain unifies deals money commercial engine commission constructor deal can negotiate flat progressive tracking integrity attributed live real-time source report scale operations flexible system many brands account management dedicated manager assignment marketing programme brand","s":[["Affiliate — From Click to Revenue","Performance traffic, measured. Publishers, streamers, and media buyers…"],["Why Digitain Affiliate","Performance traffic, measured. Digitain Affiliate unifies affiliate ma…"],["Deals & Money — the commercial engine","Commission Constructor — Any Deal You Can Negotiate Flat, progressive,…"],["Tracking & Integrity — every click attributed","Live Click Tracking Real-time click source in the Live Click report —…"],["Scale & Operations — one flexible system, many brands","Affiliate Account Management Dedicated affiliate manager assignment, m…"],["Marketing the Programme — your brand, their reach","Campaign Management Public or private campaigns with geotargeting per…"],["Prove & Protect — reporting, security, migration","The Report Catalog — nine reports per brand Live Click (clicks, click…"],["Business Value","Complete Visibility and Control Scale acquisition with complete visibi…"],["What affiliate marketing actually is","From the Gaming Academy affiliate guide Affiliate marketing is perform…"],["The three-party triangle — click a party to see its role","From the Gaming Academy affiliate guide Operator Owns the product Affi…"],["Six kinds of affiliate — know who you're dealing with","From the Gaming Academy affiliate guide SEO / Content sites Review sit…"],["The four commission models — when and how much you pay","From the Gaming Academy affiliate guide CPA — Cost Per Acquisition $50…"],["Model matcher — pick the affiliate, get the deal","From the Gaming Academy affiliate guide Media buyer Paid ads, fast vol…"],["The operator side — what base do you calculate on?","From the Digitain bonus management guide Model Calculation base Typica…"],["The Commission Constructor runs all of them","Whatever deal you negotiate, Digitain Affiliate can compute it: flat,…"]]},{"u":"dynamics-bonus-engine.html","t":"Bonus Engine","k":"bonus engine promotional budget under control configurable environment creating managing distributing campaign composer model learn triggers conditions actions assembled same three blocks built convert not just configure redesigned player-facing experience bonus-manageme inside operational toolkit dynamics product deck stacked wallets players hold coverage reliability casino vendors","s":[["Bonus Engine — Your Promotional Budget, Under Control","A configurable environment for creating, managing, and distributing pr…"],["Campaign Composer — one model to learn: Triggers · Conditions · Actions","Every campaign in the engine is assembled from the same three blocks.…"],["Built to convert, not just to configure","A Redesigned Player-Facing Experience The player-facing bonus-manageme…"],["Inside the engine — the operational toolkit","From the Dynamics product deck Stacked Bonus Wallets Players hold an u…"],["Coverage and operational reliability","80+ casino vendors covered by free-spin integrations — provider- or ga…"],["Business Impact","From isolated promotions to coordinated player journeys: broad reward…"],["Three problems a bonus solves — and what happens without one","From the Digitain bonus guides Acquisition The player is choosing betw…"],["Why bonuses decide the P&L — not just the promo calendar","From the Digitain bonus guides A bonus is a business tool, not a gift…"],["The bonus-level spectrum — bonus spend as a share of GGR","From the Digitain bonus guides 0% Business dies No acquisition. No ret…"],["Retention economics — the same 1,000 players, two strategies","From the Digitain bonus guides Metric Without retention (low bonus) Wi…"],["Wagering requirements — how WR sets the real cost of a bonus","From the Digitain bonus guides WR (playthrough) What it means per €100…"],["Bonus Calibrator — pick a segment, get the right size","From the Digitain bonus guides Micro Player Spin €0.10–0.25 · GGR €15–…"],["Free Spins — quantity × value = a meaningful session","From the Digitain bonus guides No. of FS Value Real gameplay Assessmen…"],["Loyalty points — motivation through visible progress","From the Digitain bonus guides ★ The visible-progress rule: time to th…"],["Delivery timing — the same bonus, four very different moments","From the Digitain bonus guides After registration — within 24h The pla…"]]},{"u":"dynamics-bonuses.html","t":"Bonuses & Tournaments","k":"bonuses tournaments keep players playing automatically beyond acquisition offers opera retention triggers rewards campaigns trigger behaviors matter wagering activity cumul competition engine casino live through relum integration competitive mech why retains turn routine play event mechanics tournament leaderboard how see weekend slots race demo page","s":[["Bonuses & Tournaments","Keep players playing — automatically. Beyond acquisition offers, opera…"],["Retention triggers & rewards","Campaigns trigger on the behaviors that matter Wagering Activity Cumul…"],["Tournaments — Competition as a Retention Engine","Casino tournaments live through the Relum integration Competitive mech…"],["Why it retains","Tournaments turn routine play into an event: competitive mechanics and…"],["Tournament leaderboard — how players see it","Live through Relum Weekend Slots Race Demo tournament page Prize fund…"],["What a healthy bonus programme returns","From the Digitain bonus guides 38–48% Normal M1→M2 retention with a he…"]]},{"u":"dynamics-campaigns.html","t":"Campaigns","k":"campaigns acquisition activation hub everything need acquire activate platform bonuses about first touch active player bonus engine create automate optimize acro key features launch smarter manage distribute welcome offers what hours worth digitain guides delivered within hou promo codes reach channel connect external marketing live","s":[["Campaigns — The Acquisition & Activation Hub","Everything you need to acquire and activate — in one platform. Bonuses…"],["About","Everything you need to acquire and activate — in one platform. Bonuses…"],["From first touch to active player","1 Bonus Engine campaigns Create, automate, and optimize campaigns acro…"],["Key Features","Bonus Engine — Launch Smarter Campaigns Create, manage, and distribute…"],["Welcome offers — what the first 24 hours are worth","From the Digitain bonus guides +25–40% Bonuses delivered within 24 hou…"],["Promo Codes — Reach Every Channel","What promo codes do Connect external marketing to live bonus & real-mo…"]]},{"u":"dynamics-cashback.html","t":"Cashback","k":"cashback reward smarter retain longer configurable regular model casino sportsbook campa loss moment digitain bonus guides why players quit hours automated scheduled retention deep configuration designed how campaign runs define period qualification thresholds perce player targeting use segments categories tags lifecycle status align coordination coordinated","s":[["Cashback — Reward Smarter. Retain Longer.","A configurable Regular Cashback model for Casino and Sportsbook. Campa…"],["The loss moment","From the Digitain bonus guides The loss · why players quit 2–3 hours a…"],["Regular Cashback — Automated, Scheduled Retention","One scheduled model, deep configuration. Regular Cashback is designed…"],["How a scheduled cashback campaign runs","1 Define the campaign Campaign period, qualification thresholds, perce…"],["Player Targeting","Use segments, categories, tags, and lifecycle status to align cashback…"],["Reward and Bonus Coordination","Cashback is coordinated with the wider Bonus Engine so reward conditio…"],["Operational Control","Configure campaign periods, qualification thresholds, percentages, cap…"],["Performance Visibility","Track campaign participation, eligible Net Loss, rewards issued, and p…"],["Business Impact","Predictable, targeted retention campaigns without relying on a generic…"],["What cashback really costs","From the Digitain bonus guides Typical cashback is 10–20% of losses —…"],["Run the arithmetic","From the Digitain bonus guides € player losses this period 10% 15% 20%…"],["Cashback timing, cost and protection","From the Digitain bonus guides 60%+ back same day A cashback reward th…"]]},{"u":"dynamics-cms.html","t":"CMS & Promotions","k":"cms promotions control player-facing experience without development queue cont core scope lobby content structure dynamic management see trans mobile-compatible back office make instant website changes operational inte brand dynamics product deck one-stop shop configuring new customization highly flexible customer-focused what homepage zones managed yourbrand com","s":[["CMS & Promotions","Control the player-facing experience without a development queue: cont…"],["Core CMS Scope","● Lobby content and structure — dynamic management (see Lobby) ● Trans…"],["Mobile-Compatible Back Office","Make instant website changes from a mobile-compatible operational inte…"],["Brand Management","From the Dynamics product deck A one-stop shop for configuring a new b…"],["UI Customization","From the Dynamics product deck Highly flexible and customer-focused —…"],["What you control","Homepage zones — managed from the CMS yourbrand.com Navigation & categ…"],["Promotions, engagement & communication","Banner & Promotional Content Create and manage banners and promotional…"],["No release cycle","The whole point, in one strip Edit in the back office Content, transla…"],["Built-In Player Communication","Four channels, one platform — pick one Email SMS Push Inbox Email. Cam…"]]},{"u":"dynamics-crm-campaigns.html","t":"Communication & CRM Campaigns","k":"communication crm campaigns coordinate player lifecycle operational environment buil native tools built built-in solution supports email sms push notifications pla extended channels digitain product optional ecosystem runs platform perso campaign types simple general personalized bulk communicat customer journey automation visual builder maps tracks optimizes experience","s":[["Communication & CRM Campaigns","Coordinate the player lifecycle from one operational environment. Buil…"],["Native Communication Tools — Built In","The built-in solution supports Email, SMS, Push notifications, and Pla…"],["Extended Channels — the Digitain CRM Product","Optional — native to the ecosystem, runs with any platform Email Perso…"],["Campaign Types","Simple Campaign General notifications and personalized bulk communicat…"],["Customer Journey Automation","A visual journey builder maps, tracks, and optimizes the experience ac…"],["Journey builder — try it","Illustrative demo Communications Send Email Send Inbox Message Send SM…"],["Campaign Metrics Management","Primary and secondary KPIs by period and segment: average deposits, av…"]]},{"u":"dynamics-first-deposit.html","t":"First Deposit & First Bet","k":"first deposit bet turn new registrations depositing players registration habit step platform feature click open com week decides player digitain bonus guides hour choice hours what welcome offer changes really costs wagering requirements mean real cos six ways converts pick mechanic see does first-deposit frictionless","s":[["First Deposit & First Bet","Turn new registrations into depositing players. Every registration is…"],["From registration to deposit habit","Every step is a platform feature — click to open it 1 Registration com…"],["The first week decides the player","From the Digitain bonus guides Hour 0 · the choice Hours 0–24 · the ho…"],["What a welcome offer changes","From the Digitain bonus guides With a welcome offer Registrations 100%…"],["What a welcome bonus really costs","From the Digitain bonus guides Wagering requirements mean the real cos…"],["Six ways the platform converts the deposit","Pick a mechanic — see what it does. Welcome choice First-deposit bonus…"],["Frictionless Payments, Powered by Paydrom","Extensive method coverage across providers, local methods by market, m…"],["Business Impact","Increased registration-to-deposit conversion Faster time-to-first-depo…"]]},{"u":"dynamics-gamification.html","t":"Gamification","k":"gamification built-in engine connects interactive mechanics wit booster promotional wheel machine layouts grid box illustrative machines spin distribution dynamics product deck promo machi configuration reporting connections dynamic back-office configure front end casino tournaments through relum live integration use competi impact promotions become visible measurable","s":[["Gamification","A built-in Gamification Engine that connects interactive mechanics wit…"],["Booster promotional engine","Wheel — one of the machine layouts (Wheel · Grid · Box). Illustrative…"],["Machines & spin distribution","From the Dynamics product deck Promo Machines — Wheel, Grid, Box Machi…"],["Configuration, reporting, connections","Dynamic Back-Office Configuration Configure the gamification front end…"],["Casino Tournaments through Relum","Casino tournaments are live through the Relum integration. Use competi…"],["Impact","Promotions become more visible, interactive, and measurable. Dynamic b…"]]},{"u":"dynamics-growth.html","t":"Growth Strategies & Success Stories","k":"growth strategies success stories partner being prepared will publish here once","s":[["Growth Strategies & Success Stories",""],["Success Stories","Partner growth stories are being prepared and will publish here once a…"]]},{"u":"dynamics-lobby.html","t":"Lobby & Game Management","k":"lobby game management broad content-management control across casino lobbies player-faci full operator over content reorder curate con scale through digitain games aggregator wider ecosystem offers translation dynamic naming manage translations dynamically name categories other eleme banners promotional placements create support bonus mobile-compatible back office make","s":[["Lobby & Game Management","Broad content-management control across casino lobbies and player-faci…"],["Lobby Management","Full operator control over lobby content: reorder and curate lobby con…"],["Casino Content at Scale","Through Digitain's Casino Games Aggregator, the wider ecosystem offers…"],["Translation & Dynamic Naming","Manage translations and dynamically name categories and other UI eleme…"],["Banners & Promotional Placements","Create and manage banners and promotional content that support Bonus E…"],["Mobile-Compatible Back Office","Make instant website changes from a mobile-compatible operational inte…"],["Widget Catalogue","Collection Widgets Curated game collections organized by vendor or the…"],["Business Impact","● Direct control over content, localization, naming, and promotional p…"]]},{"u":"dynamics-migration.html","t":"Migration","k":"sportsbook proven now put platform behind path sportsbook-only full digitain igaming back office wallet player view already run odds trading what adds casino next games providers thr migration managed transition phase feature click open integ questions operator asks answered straight will lose brand identity frontend","s":[["Your Sportsbook Is Proven. Now Put a Platform Behind It.","The path from Sportsbook-only to the full Digitain iGaming Platform. M…"],["One back office, one wallet, one player view","You already run your sportsbook on Digitain — the odds, the trading, t…"],["What the platform adds","A casino next to your sportsbook 55,000+ games from 360+ providers thr…"],["The migration path — a managed transition","Every phase is a platform feature — click to open it 1 Phase 1 · Integ…"],["The questions every operator asks — answered straight","\"Will I lose my brand identity?\" No — the frontend is yours. DG Builde…"],["Ready to look at it seriously?","Ask your Account Manager for a migration assessment: your setup, your…"]]},{"u":"index.html","t":"Platform Overview","k":"digitain igaming platform advanced flexibility resilience ecosystem behind connected player account management wallet paymen glance click product explore pam why operators choose five reasons pick see what lifecycle engines confi native mobile applications ios android dynamics deck integrates key metrics scale performance daily transactions party","s":[["Digitain iGaming Platform","Digitain's advanced iGaming platform — flexibility, resilience, and mo…"],["The Ecosystem Behind the Platform","One connected ecosystem — player account management, wallet and paymen…"],["The ecosystem at a glance","Click any product to explore it Digitain iGaming Platform PAM · Wallet…"],["Why Operators Choose the Platform","Five reasons — pick one, see what's behind it. Lifecycle Engines Confi…"],["Native Mobile Applications — iOS & Android","From the Dynamics product deck The platform integrates with native iOS…"],["Key Metrics","Platform scale and performance at a glance. Daily Transactions 250M+ D…"],["3rd Party Integrations","Connect the tools your teams already use — the integration catalogue f…"],["Our Partners","200+ active partner brands run on the Digitain iGaming Platform. Hover…"],["Licenses & Certifications","GLI 19 and GLI 33 certified — certification passed in December 2021. G…"]]},{"u":"dynamics-pam.html","t":"PAM","k":"pam player account management full control operations platform tools features system centralizes data single powerful wor intuitive actionable profile than record working surface complete overview cat workspace each step feature click open registration tags act real time dynamics product deck vertical horizontal categorize brand automation","s":[["PAM — Player Account Management","Full control of your player operations. Platform Tools & Features"],["Full control of your player operations","The PAM system centralizes all player data into a single, powerful wor…"],["An intuitive, actionable profile","More than a record — a working surface : complete player overview, cat…"],["One player, one workspace","Each step is a platform feature — click to open it 1 Registration A co…"],["Tags that act in real time","From the Dynamics product deck Vertical and horizontal tags categorize…"],["From tags to Brand Automation","Predefined business rules become repeatable workflows Categorization c…"],["Responsible Gaming — per player","Adaptable to specific regulatory requirements ✓ Deposit Limits Daily /…"],["Player-level risk controls","Multi-account detection Identify account relationships — supporting fr…"],["Brand Automation","Predefined rules, repeatable workflows Dynamic segments & tags Audienc…"],["How it works: Triggers · Conditions · Actions","The when Trigger Defines what the automation watches. The how Conditio…"],["User management & permissions","From the Dynamics product deck Create, grant, manage, and control back…"],["Security","Personal data protection Special permissions and encryption for sensit…"],["Seamless wallet logic","Seamless wallet logic connects Casino and Sportsbook play across real…"],["Player verification","Tracked on the profile Document upload Players submit documents throug…"],["Connects to","PAM is a core pillar of the unified platform Bonus Engine Same Trigger…"]]},{"u":"dynamics-payments-wallets.html","t":"Payments & Wallets","k":"payments perfected deposits withdrawals run paydrom digitain dedicated payment when player each stop platform capability click optimized cashier advanced multi-currency multi-wallet multiple wallets eur fiat usd btc crypto illustrativ brand automation predefined rules repeatable workflows dynamic segments tags audiences update behavior changes how works triggers","s":[["Payments, Perfected","Deposits and withdrawals run on Paydrom, Digitain's dedicated payment…"],["When a player deposits","Each stop is a platform capability — click it 1 Optimized cashier The…"],["Advanced Multi-Currency & Multi-Wallet","One player · multiple wallets EUR fiat USD fiat BTC crypto Illustrativ…"],["Brand Automation — Predefined Rules, Repeatable Workflows","Dynamic Segments & Tags Audiences that update as behavior changes — sh…"],["How It Works: Triggers · Conditions · Actions","Triggers A Trigger defines what the automation watches Conditions Cond…"]]},{"u":"dynamics-player-engagement.html","t":"CRM & Player Engagement","k":"crm player engagement digitain ecosystem command center optiona about three pillars flexible data management tools identifying unique what operators get attract new customers better reach similar groups players retain powered full segments campaigns journeys draw picture key modules capabilities marketing sales service gamification loyalty ana","s":[["CRM & Player Engagement","Digitain CRM is the ecosystem's engagement command center — an optiona…"],["About","Three pillars: flexible data management tools for identifying unique c…"],["What operators get","Attract New Customers Better Reach Similar Groups Of Players Retain Ex…"],["Powered by full player data","Segments, campaigns and journeys draw on the full picture: players, sp…"],["Key Modules & Capabilities","Key Modules Marketing · Sales · Service · Gamification · Loyalty · Ana…"],["Why teams stay flexible","Engagement & Rewards Tools Tools for building gamification and loyalty…"],["CRM Gamification, Loyalty & Administration","Missions & Tasks Personalized missions by segment with completion-time…"],["Deployment","Digitain CRM connects natively to the platform and runs standalone wit…"]]},{"u":"dynamics-player-journey.html","t":"Player Journey","k":"player journey complete lifecycle first click vip end stage platform capability open acquisition five moments right offer each digitain bonus guides day stranger days new","s":[["Player Journey","The complete player lifecycle — from first click to VIP."],["The player lifecycle — end to end","Every stage is a platform capability — click to open it 1 Acquisition…"],["One journey, five moments — and the right offer for each","From the Digitain bonus guides 1 Day 1 Stranger 2 Days 2–7 New Player…"]]},{"u":"dynamics-reactivation.html","t":"Reactivation","k":"reactivation bring dormant players back churned already know brand winning them costs less how player comes step platform feature click open dormancy detecte clock digitain bonus guides day distraction window win-back new acquisition cost put play acqui what should key features detect automatically dynamic segments","s":[["Reactivation — Bring Dormant Players Back","Churned players already know your brand; winning them back costs less…"],["How a dormant player comes back","Every step is a platform feature — click to open it 1 Dormancy detecte…"],["The dormancy clock","From the Digitain bonus guides Day 3 · the distraction window Day 7+ ·…"],["Win-back vs. new acquisition","From the Digitain bonus guides Cost to put a player back in play Acqui…"],["What winning a player back should cost","From the Digitain bonus guides Winning back a dormant player is 3–5× c…"],["Key Features","Detect Dormancy Automatically Dynamic player segments group players by…"]]},{"u":"dynamics-referral.html","t":"Referral","k":"referral turn players best channel better-qualified player rewards about acquire high-quality through people who know brand how becomes share shares unique link one-click shari key features lower customer acquisition costs reduce dependency paid channels programme configurable milestones milestone registration mechanic referred friend registers thro","s":[["Referral — Turn Players into Your Best Channel","Turn every referral into a better-qualified player. Referral rewards w…"],["About","Acquire high-quality players through the people who know your brand be…"],["How a referral becomes a player","1 Share The player shares their unique referral link — one-click shari…"],["Key Features","Lower Customer Acquisition Costs Reduce dependency on paid channels wi…"],["One Programme, Configurable Milestones","Milestone 1 · Registration Mechanic The referred friend registers thro…"]]},{"u":"dynamics-registration.html","t":"Registration & Verification","k":"registration verification build onboarding around brand player market dynamic page builder shape experience instead forcing built-in manual industry-standard process document upload operator third-party kyc aml integrations where automated identity database checks requir conversion-aware operationally controlled combined page-builder approach keeps connect campaigns can form part broader","s":[["Registration & Verification","Build onboarding around the brand, player, and market. Registration is…"],["Dynamic Registration Page Builder","Shape the registration experience instead of forcing every market into…"],["Built-In Manual Verification","An industry-standard process for player document upload and operator v…"],["Third-Party KYC & AML Integrations","Where automated identity, document, database, or AML checks are requir…"],["Conversion-Aware, Operationally Controlled","The combined page-builder and verification approach keeps onboarding c…"],["Connect Verification to Campaigns","Registration and verification can form part of a broader activation jo…"],["Form builder demo — compose a registration form","Interactive demo Market A Market B Available fields — click to add or…"],["KYC & Verification Providers","Automated or specialist checks connect through third-party KYC and AML…"],["Localization Through the Back Office","Translations and UI naming are managed through the back-office content…"],["Two Coordinated Layers — Native and Third-Party","Native layer ✓ Registration Page Builder — fully customizable journey…"],["Why the first 24 hours matter","From the Digitain bonus guides +25–40% Bonuses delivered within 24 hou…"],["Business Impact","A conversion-aware, operationally controlled onboarding journey Locali…"]]},{"u":"dynamics-reporting.html","t":"Reporting & Analytics","k":"reporting analytics real-time metrics reports review player activity game performan capabilities live business information build perfect view toggle off dashboard yours compose pla management monitor measure analyze centralized interactive way extracti back-office modules sits inside operational back office dashboards rep report suite nine families jurisdiction-oriented","s":[["Reporting & Analytics","Real-time metrics and reports — review player activity, game performan…"],["Capabilities","Live Business Information Review live business information from the op…"],["Build your perfect view","Toggle capabilities on and off — the dashboard is yours to compose Pla…"],["Dashboard Management","Monitor · Measure · Analyze A centralized, interactive way of extracti…"],["Back-office modules","Reporting sits inside the operational back office — dashboards and rep…"],["The report suite","Nine report families + jurisdiction-oriented categories Report familie…"]]},{"u":"dynamics-retention.html","t":"Retention","k":"retention keep players engaged satisfied returning continuously math digitain bonus guides programme when each tool fires days build habit months loop step platform feature click open play activity","s":[["Retention","Keep players engaged, satisfied, and returning — continuously."],["The retention math","From the Digitain bonus guides No retention programme With retention p…"],["When each tool fires","From the Digitain bonus guides Days 2–7 · build the habit Months 1–3 ·…"],["The retention loop","Every step is a platform feature — click to open it 1 Play Activity an…"]]},{"u":"dynamics-risk.html","t":"Risk & Compliance","k":"risk compliance player protection operational oversight built daily workflows about gli certification passed december adapted stack six layers platform responsible gaming limits self-exclusion player-protection tool deposit weekly monthly net loss bet fraud management toolset monitor alert real-time monitoring incoming betting traffic moni third-party kyc aml","s":[["Risk & Compliance","Player protection and operational oversight built into daily workflows…"],["About","GLI 19 and GLI 33 certification passed in December 2021, adapted for m…"],["The compliance stack — six layers, one platform","1 Responsible Gaming Limits, self-exclusion and player-protection tool…"],["Responsible Gaming","Deposit Limits Daily / weekly / monthly Net / Loss Limits Bet Limits S…"],["Risk & Fraud Management Toolset","Monitor & Alert Real-time bet monitoring Incoming betting traffic moni…"],["Third-Party KYC & AML Connections","Where automated identity, document, database, or AML checks are requir…"],["Flexible Calculation Periods","Responsible gaming limits can use different time-calculation models ac…"],["Regulatory Reporting","Jurisdiction-oriented reporting for markets including Romania, Greece,…"],["Certification & Resilience","GLI 19 and GLI 33 certification passed in December 2021, adapted for m…"]]},{"u":"dynamics-tools.html","t":"Platform Tools & Features","k":"platform tools features player account management wallet payment infrastructure bonus","s":[["Platform Tools & Features","Player account management, wallet and payment infrastructure, bonus an…"]]},{"u":"dynamics-vip.html","t":"VIP Development","k":"vip development top players deserve small share drives large ngr separate vip- how player becomes step platform feature click open play data ever math digitain bonus guides revenue concentration get treatment right high roller big key features identify tier dynamic segments categories tags","s":[["VIP Development — Your Top Players Deserve More","A small share of players drives a large share of NGR. No separate VIP-…"],["How a player becomes a VIP","Every step is a platform feature — click to open it 1 Play & data Ever…"],["The VIP math","From the Digitain bonus guides Revenue concentration 5–8% of players g…"],["Get the treatment right","From the Digitain bonus guides High Roller VIP The High Roller: big en…"],["Key Features","Identify and Tier Dynamic segments, categories, and tags identify and…"]]}];
+var dseSel = 0, dseRows = [];
+function dseOpen(){document.getElementById('dseOv').classList.add('on');var i=document.getElementById('dseIn');i.value='';dseQuery('');setTimeout(function(){i.focus()},30);}
+function dseClose(){document.getElementById('dseOv').classList.remove('on');}
+function dseEsc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function dseMark(s,terms){
+  var e = dseEsc(s);
+  for(var i=0;i<terms.length;i++){
+    var re = new RegExp('('+terms[i].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
+    e = e.replace(re,'<mark>$1</mark>');
+  }
+  return e;
+}
+function dseQuery(q){
+  q = q.trim().toLowerCase();
+  var terms = q ? q.split(/\s+/) : [];
+  var out = [];
+  for(var p=0;p<DGA_IDX.length;p++){
+    var pg = DGA_IDX[p];
+    if(!terms.length){ out.push({u:pg.u,p:pg.t,h:'Open page',x:'',sc:1}); continue; }
+    var tl = pg.t.toLowerCase(), kw = pg.k;
+    var titleHit = terms.every(function(w){return tl.indexOf(w)>=0});
+    if(titleHit) out.push({u:pg.u,p:pg.t,h:'Open page',x:'',sc:50});
+    for(var s=0;s<pg.s.length;s++){
+      var h = pg.s[s][0], x = pg.s[s][1];
+      var hay = (tl+' '+h+' '+x+' '+kw).toLowerCase();
+      var all = terms.every(function(w){return hay.indexOf(w)>=0});
+      if(!all) continue;
+      var sc = 0;
+      for(var w=0;w<terms.length;w++){
+        if(h.toLowerCase().indexOf(terms[w])>=0) sc+=5;
+        else if(x.toLowerCase().indexOf(terms[w])>=0) sc+=2;
+        else sc+=1;
+      }
+      out.push({u:pg.u,p:pg.t,h:h,x:x,sc:sc});
+    }
+  }
+  out.sort(function(a,b){return b.sc-a.sc});
+  out = out.slice(0, terms.length?14:26);
+  var res = document.getElementById('dseRes');
+  if(!out.length){ res.innerHTML='<div class="dse-empty">No matches — try a product name or a feature term.</div>'; dseRows=[]; return; }
+  var html = '';
+  for(var i=0;i<out.length;i++){
+    html += '<div class="dse-r'+(i===0?' on':'')+'" data-u="'+out[i].u+'" onclick="location.href=this.getAttribute(\'data-u\')" onmousemove="dseHover(this)">'
+      + '<div class="dse-r__p">'+dseEsc(out[i].p)+'</div>'
+      + '<div class="dse-r__h">'+dseMark(out[i].h,terms)+'</div>'
+      + (out[i].x?'<div class="dse-r__x">'+dseMark(out[i].x,terms)+'</div>':'')
+      + '</div>';
+  }
+  res.innerHTML = html; dseSel = 0;
+  dseRows = res.querySelectorAll('.dse-r');
+}
+function dseHover(el){
+  for(var i=0;i<dseRows.length;i++){ dseRows[i].classList.remove('on'); if(dseRows[i]===el) dseSel=i; }
+  el.classList.add('on');
+}
+document.getElementById('dseIn').addEventListener('input',function(){dseQuery(this.value)});
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&(e.key==='k'||e.key==='K')){e.preventDefault();var o=document.getElementById('dseOv');o.classList.contains('on')?dseClose():dseOpen();return;}
+  var ov = document.getElementById('dseOv');
+  if(!ov.classList.contains('on')) return;
+  if(e.key==='Escape'){dseClose();}
+  else if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!dseRows.length) return;
+    dseRows[dseSel].classList.remove('on');
+    dseSel = (dseSel + (e.key==='ArrowDown'?1:-1) + dseRows.length) % dseRows.length;
+    dseRows[dseSel].classList.add('on');
+    dseRows[dseSel].scrollIntoView({block:'nearest'});
+  } else if(e.key==='Enter'){
+    if(dseRows.length) location.href = dseRows[dseSel].getAttribute('data-u');
+  }
+});
+</script>
+<!-- ===== /DGA SEARCH v1 ===== -->
+
+
+<style>/* DGD BADGE v1 */.logo-dyn{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.08em;color:#fff;background:var(--centrivo);border-radius:4px;padding:2px 6px;margin-left:5px;vertical-align:2px}</style>
+</body></html>

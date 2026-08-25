@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitain iGaming Platform — PAM</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%230F766E"/><text x="16" y="22.5" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="white" text-anchor="middle">D</text></svg>'>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sw:230px;--accent:#1A56DB;--centrivo:#0F766E;--centrivo2:#134E4A;--centrivo-light:#F0FDFA;
+  --dark:#0E1117;--surface:#F7F8FC;--border:#E4E7EF;--text:#111827;--muted:#6B7280;--faint:#9CA3AF;
+  --r-md:10px;--r-lg:14px;--r-xl:20px;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);
+  --sh-md:0 6px 20px rgba(0,0,0,.12);
+  --font:"Roboto","Tahoma",sans-serif;--font-cond:"Roboto Condensed","Tahoma",sans-serif
+}
+body{font-family:var(--font);background:var(--surface);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:var(--sw);background:var(--dark);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar__logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo-wrap{display:flex;align-items:center;gap:9px}
+.logo-icon{width:30px;height:30px;background:var(--centrivo);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round}
+.logo-text{font-size:15px;font-weight:700;color:white;letter-spacing:-.3px}
+.logo-sub{font-size:10.5px;color:rgba(255,255,255,.4);letter-spacing:.04em;margin-top:1px}
+.sidebar__nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-section{font-size:10px;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;padding:0 14px;margin:12px 0 4px}
+.nav-item{display:block;color:rgba(255,255,255,.45);padding:5px 14px;border-radius:5px;text-decoration:none;transition:all .12s;font-weight:500;line-height:1.4}
+.nav-item:hover{color:white;background:rgba(255,255,255,.05)}
+.nav-item.active{color:white;font-weight:600;background:rgba(15,118,110,.28);border-left:2px solid var(--centrivo)}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none}
+.nav-link:hover{color:white}
+.nav-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+.sidebar__foot{padding:12px 14px;border-top:1px solid rgba(255,255,255,.06)}
+.foot-label{font-size:10.5px;color:rgba(255,255,255,.35);display:block;margin-bottom:2px}
+.foot-email{font-size:12px;font-weight:500;color:rgba(255,255,255,.65)}
+.foot-phone{font-size:11.5px;color:rgba(255,255,255,.38);margin-top:1px}
+.header{position:fixed;top:0;left:var(--sw);right:0;height:52px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;padding:0 22px;gap:10px;z-index:90}
+.h-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.h-btn svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5}
+.h-av{width:32px;height:32px;border-radius:50%;background:var(--centrivo);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;cursor:pointer}
+.main-page{margin-left:var(--sw);padding-top:52px;flex:1}
+.main-inner{max-width:1080px;margin:0 auto;padding:30px 22px 80px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);margin-bottom:18px;flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .12s}
+.breadcrumb a:hover{color:var(--centrivo)}
+.bc-sep{color:var(--border)}
+.page-title{font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.4px;margin-bottom:5px}
+.page-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+/* TABS */
+.tabs-bar{background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:5px;display:inline-flex;gap:3px;box-shadow:var(--sh);margin-bottom:18px}
+.t-btn{padding:8px 16px;border-radius:10px;font-size:14px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .15s}
+.t-btn.active{background:var(--centrivo);color:white;box-shadow:0 2px 8px rgba(15,118,110,.35)}
+.t-btn:hover:not(.active){background:var(--surface);color:var(--text)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+/* WIDGET */
+.widget{background:white;border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:16px}
+.widget__head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.widget__title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+.widget__body{padding:20px 22px}
+/* FEATURE BANNER */
+.feature-banner{border-radius:var(--r-xl);overflow:hidden;background:#071210;margin-bottom:18px;display:flex;min-height:200px;border:1px solid rgba(255,255,255,.04)}
+.fb-left{width:260px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.fb-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(15,118,110,.45) 0%,transparent 70%);top:-40px;left:-40px}
+.fb-icon{font-size:72px;position:relative;z-index:1;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))}
+.fb-right{flex:1;padding:32px;display:flex;flex-direction:column;justify-content:center}
+.fb-tag{display:inline-flex;align-items:center;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.07em;color:#5EEAD4;background:rgba(15,118,110,.2);border:1px solid rgba(15,118,110,.35);border-radius:20px;padding:3px 10px;margin-bottom:12px;text-transform:uppercase;white-space:nowrap}
+.fb-title{font-size:26px;font-weight:700;color:white;letter-spacing:-.4px;margin-bottom:8px}
+.fb-sub{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;max-width:460px}
+.fb-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:var(--centrivo);color:white;border-radius:var(--r-md);font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;border:none;cursor:pointer;font-family:var(--font);align-self:flex-start}
+.fb-btn:hover{background:var(--centrivo2)}
+.fb-btn svg{width:13px;height:13px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round}
+/* FEAT GRID */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat-card{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border)}
+.feat-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round}
+.feat-icon.ct{background:var(--centrivo-light);color:var(--centrivo)}
+.feat-icon.bl{background:#EEF4FF;color:#1A56DB}
+.feat-icon.pu{background:#EDE9FE;color:#7C3AED}
+.feat-icon.am{background:#FFFBEB;color:#D97706}
+.feat-icon.re{background:#FFF1F2;color:#E11D48}
+.feat-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+.feat-desc{font-size:13px;color:var(--muted);line-height:1.6}
+/* ACCORDION */
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-item:last-child{border-bottom:none}
+.acc-header{display:flex;align-items:center;gap:10px;padding:14px 0;cursor:pointer}
+.acc-header:hover .acc-title{color:var(--centrivo)}
+.acc-title{font-size:14px;font-weight:700;color:var(--text);flex:1;transition:color .15s}
+.acc-chevron{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.acc-chevron svg{width:11px;height:11px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;transition:transform .2s}
+.acc-item.open .acc-chevron{background:var(--centrivo);border-color:var(--centrivo)}
+.acc-item.open .acc-chevron svg{stroke:white;transform:rotate(180deg)}
+.acc-body{display:none;padding-bottom:14px;font-size:14px;color:var(--muted);line-height:1.7}
+.acc-item.open .acc-body{display:block}
+/* BV */
+.bv-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.bv-item:last-child{border-bottom:none}
+.bv-icon{width:38px;height:38px;border-radius:50%;background:var(--centrivo);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bv-icon svg{width:18px;height:18px;stroke:white;fill:none;stroke-width:1.8;stroke-linecap:round}
+.bv-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.bv-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+/* SOL TABS (used in sub-sections) */
+.sol-tabs{display:flex;gap:3px;background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:4px;box-shadow:var(--sh);margin-bottom:18px;width:fit-content}
+.sol-tab{padding:7px 16px;border-radius:9px;font-size:14px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .15s}
+.sol-tab.active{background:var(--centrivo);color:white}
+.sol-tab:hover:not(.active){background:var(--surface);color:var(--text)}
+/* CARDS GRID 2x2 */
+.cards-2x2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.section-card{background:white;border-radius:var(--r-xl);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh);text-decoration:none;display:flex;flex-direction:column;transition:all .22s}
+.section-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:rgba(15,118,110,.18)}
+.section-card__banner{height:180px;position:relative;display:flex;align-items:center;justify-content:space-between;padding:28px 32px;overflow:hidden}
+.section-card__glow{position:absolute;width:260px;height:260px;border-radius:50%;right:-60px;bottom:-80px;opacity:.25;pointer-events:none}
+.section-card__icon{font-size:70px;position:relative;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5))}
+.section-card__meta{position:relative;z-index:1;text-align:right}
+.section-card__num{font-size:38px;font-weight:700;color:white;letter-spacing:-1px;line-height:1;margin-bottom:3px}
+.section-card__label{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.section-card__badges{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap;align-items:flex-start}
+.sc-badge{font-size:10.5px;font-weight:700;padding:5px 9px;border-radius:6px;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center}
+.sc-badge-solid{background:var(--centrivo);color:white}
+.sc-badge-outline{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.22)}
+.section-card__body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:10px}
+.section-card__top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.section-card__name{font-size:19px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.section-card__explore{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--centrivo);padding:5px 12px;border-radius:20px;background:var(--centrivo-light);border:1px solid rgba(15,118,110,.18);white-space:nowrap;transition:all .15s;flex-shrink:0;width:fit-content}
+.section-card:hover .section-card__explore{background:var(--centrivo);color:white;border-color:var(--centrivo)}
+.section-card__explore svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.section-card__desc{font-size:14px;color:var(--muted);line-height:1.6}
+.section-card__tags{display:flex;gap:5px;flex-wrap:wrap;align-items:flex-start}
+.sc-tag{font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted);white-space:nowrap;flex-shrink:0}
+/* STAT TILES */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-tile{background:white;border-radius:var(--r-lg);border:1px solid var(--border);padding:18px;box-shadow:var(--sh)}
+.stat-tile__label{font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.stat-tile__val{font-size:24px;font-weight:700;color:var(--centrivo);letter-spacing:-.5px}
+.stat-tile__sub{font-size:12px;color:var(--muted);margin-top:2px}
+/* PAM PAGE — illustrative profile mockup */
+.pam-frame{background:white;border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden;margin-bottom:8px}
+.pam-frame__bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.pam-frame__dot{width:9px;height:9px;border-radius:50%;background:#D1D5DB}
+.pam-frame__dot:nth-child(1){background:#FCA5A5}.pam-frame__dot:nth-child(2){background:#FCD34D}.pam-frame__dot:nth-child(3){background:#86EFAC}
+.pam-frame__url{margin-left:10px;flex:1;background:white;border:1px solid var(--border);border-radius:6px;font-size:11.5px;color:var(--faint);padding:4px 10px}
+.pam-frame__body{display:grid;grid-template-columns:210px 1fr}
+.pam-prof{padding:20px 18px;border-right:1px solid var(--border);background:linear-gradient(180deg,#FFFFFF,#F0FDFA)}
+.pam-avatar{width:52px;height:52px;border-radius:50%;background:var(--centrivo);color:white;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;margin-bottom:10px}
+.pam-prof__name{font-size:15px;font-weight:700;color:var(--text)}
+.pam-prof__mail{font-size:12px;color:var(--muted);margin:2px 0 12px}
+.pam-prof__lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.pam-tagchip{display:inline-block;font-size:11.5px;font-weight:600;color:var(--centrivo);background:var(--centrivo-light);border:1px solid rgba(15,118,110,.2);border-radius:20px;padding:3px 9px;margin:0 4px 5px 0}
+.pam-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.pam-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px}
+.pam-panel__h{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--centrivo);margin-bottom:8px}
+.pam-panel__h a{color:var(--centrivo);text-decoration:none}
+.pam-panel__h a:hover{text-decoration:underline}
+.pam-row{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted);padding:4px 0;border-bottom:1px dashed var(--border)}
+.pam-row:last-child{border-bottom:none}
+.pam-row b{color:var(--text);font-weight:600;text-align:right}
+.pam-caption{font-size:12px;color:var(--faint);font-style:italic;text-align:center;margin-bottom:4px}
+/* PAM PAGE — quick card, KPI row, profile tab strip (Tab 1 mockup) */
+.pam-qc{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#FFFFFF,#F0FDFA);flex-wrap:wrap}
+.pam-qc__name{font-size:14.5px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pam-state{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#047857;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:20px;padding:2px 8px}
+.pam-qc__note{font-size:11px;font-weight:400;color:var(--faint);font-style:italic}
+.pam-qc__meta{font-size:12px;color:var(--muted);margin-top:3px}
+.pam-qc__meta b{color:var(--text);font-weight:600}
+.pam-qc__right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.pam-qc__link{font-size:12px;font-weight:700;color:var(--centrivo);text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.pam-qc__btn{font-size:12px;font-weight:700;color:white;background:var(--centrivo);border-radius:7px;padding:5px 12px;white-space:nowrap}
+.pam-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px 16px 0}
+.pam-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:9px 12px}
+.pam-kpi span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.pam-kpi b{display:block;font-size:15px;font-weight:700;color:var(--centrivo);margin-top:2px}
+.pam-kpi small{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+.pam-tabstrip{display:flex;gap:6px;flex-wrap:wrap;padding:12px 16px 0}
+.pam-tabstrip span{font-size:11.5px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
+/* PAM PAGE — interactive tag demo */
+.pam-tags-demo{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pam-tag-btn{font-family:var(--font);font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:white;color:var(--muted);cursor:pointer;transition:all .15s}
+.pam-tag-btn:hover{border-color:var(--centrivo);color:var(--centrivo)}
+.pam-tag-btn.active{background:var(--centrivo);border-color:var(--centrivo);color:white;box-shadow:0 2px 8px rgba(15,118,110,.3)}
+.pam-tag-out{background:var(--centrivo-light);border:1px solid rgba(15,118,110,.18);border-radius:var(--r-md);padding:12px 16px;font-size:14px;color:var(--text);line-height:1.6}
+/* PAM PAGE — RG tile grid */
+.pam-rg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.pam-rg-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 13px;font-size:13.5px;font-weight:600;color:var(--text);display:flex;gap:8px;align-items:flex-start;line-height:1.35}
+.pam-rg-tile>span{color:var(--centrivo);font-weight:700}
+.pam-rg-tile small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:2px;line-height:1.4}
+/* PAM PAGE — Triggers · Conditions · Actions pipeline */
+.pam-tca{display:flex;align-items:stretch;overflow-x:auto;padding:6px 0}
+.pam-tca__card{flex:1;min-width:160px;background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;position:relative}
+.pam-tca__card+.pam-tca__card{margin-left:26px}
+.pam-tca__card+.pam-tca__card::before{content:"→";position:absolute;left:-21px;top:50%;transform:translateY(-50%);color:var(--centrivo);font-weight:700;font-size:15px}
+.pam-tca__k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--centrivo);margin-bottom:5px}
+.pam-tca__t{font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pam-tca__d{font-size:13px;color:var(--muted);line-height:1.55}
+.pam-p{font-size:14.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.pam-p b{color:var(--text)}
+.pam-link{color:var(--centrivo);font-weight:700;text-decoration:none}
+.pam-link:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sidebar__logo">
+    <div class="logo-wrap"><div class="logo-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M8 5v6"/></svg></div>
+    <div><div class="logo-text">Digitain <span class="logo-dyn">DYNAMICS</span></div><div class="logo-sub">IGAMING PLATFORM</div></div></div>
+  </div>
+  <div class="dse-wrap"><button class="dse-btn" onclick="dseOpen()" type="button"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m15.8 15.8 5.2 5.2"/></svg>Search<span class="dse-btn__kbd">Ctrl K</span></button></div>
+<div class="sidebar__nav">
+    <div class="nav-section">iGaming Platform</div>
+    <a class="nav-item" href="index.html" style="font-size:13px">Platform Overview</a>
+    <a class="nav-section" href="dynamics-player-journey.html" style="margin-top:14px">Player Journey</a>
+    <a class="nav-item" href="dynamics-acquisition.html" style="padding-left:26px;font-size:12.5px">Acquisition</a>
+    <a class="nav-item" href="dynamics-affiliate.html" style="padding-left:34px;font-size:12px">Affiliate</a>
+    <a class="nav-item" href="dynamics-referral.html" style="padding-left:34px;font-size:12px">Referral</a>
+    <a class="nav-item" href="dynamics-campaigns.html" style="padding-left:34px;font-size:12px">Campaigns</a>
+    <a class="nav-item" href="dynamics-registration.html" style="padding-left:26px;font-size:12.5px">Registration &amp; Verification</a>
+    <a class="nav-item" href="dynamics-first-deposit.html" style="padding-left:26px;font-size:12.5px">First Deposit &amp; First Bet</a>
+    <a class="nav-item" href="dynamics-retention.html" style="padding-left:26px;font-size:12.5px">Retention</a>
+    <a class="nav-item" href="dynamics-cashback.html" style="padding-left:34px;font-size:12px">Cashback</a>
+    <a class="nav-item" href="dynamics-bonuses.html" style="padding-left:34px;font-size:12px">Bonuses &amp; Tournaments</a>
+    <a class="nav-item" href="dynamics-crm-campaigns.html" style="padding-left:34px;font-size:12px">Communication &amp; CRM</a>
+    <a class="nav-item" href="dynamics-reactivation.html" style="padding-left:26px;font-size:12.5px">Reactivation</a>
+    <a class="nav-item" href="dynamics-vip.html" style="padding-left:26px;font-size:12.5px">VIP Development</a>
+    <a class="nav-section" href="dynamics-tools.html" style="margin-top:14px">Platform Tools &amp; Features</a>
+    <a class="nav-item" href="dynamics-bonus-engine.html" style="padding-left:26px;font-size:12.5px">Bonus Engine</a>
+    <a class="nav-item" href="dynamics-player-engagement.html" style="padding-left:26px;font-size:12.5px">CRM &amp; Engagement</a>
+    <a class="nav-item" href="dynamics-gamification.html" style="padding-left:26px;font-size:12.5px">Gamification</a>
+    <a class="nav-item" href="dynamics-lobby.html" style="padding-left:26px;font-size:12.5px">Lobby &amp; Games</a>
+    <a class="nav-item" href="dynamics-cms.html" style="padding-left:26px;font-size:12.5px">CMS &amp; Promotions</a>
+    <a class="nav-item" href="dynamics-payments-wallets.html" style="padding-left:26px;font-size:12.5px">Payments &amp; Wallets</a>
+    <a class="nav-item active" href="dynamics-pam.html" style="padding-left:26px;font-size:12.5px">PAM</a>
+    <a class="nav-item" href="dynamics-reporting.html" style="padding-left:26px;font-size:12.5px">Reporting &amp; Analytics</a>
+    <div class="nav-section" style="margin-top:14px">More</div>
+    <a class="nav-item" href="dynamics-growth.html" style="font-size:13px">Growth &amp; Success Stories</a>
+    <a class="nav-item" href="dynamics-risk.html" style="font-size:13px">Risk &amp; Compliance</a>
+    <a class="nav-item" href="dynamics-migration.html" style="font-size:13px">Migration</a>
+    <div class="nav-section" style="margin-top:14px">General</div>
+    <div class="nav-link nav-soon"><svg viewBox="0 0 14 14"><path d="M7 1L1 5v8h4V9h4v4h4V5z"/></svg>Upcoming Events<span class="nav-soon-tag">SOON</span></div>
+    <div class="nav-link nav-soon"><svg viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" rx="2"/><path d="M4 7h6M4 4.5h6M4 9.5h4"/></svg>Compliance<span class="nav-soon-tag">SOON</span></div>
+  </div>
+  <div class="sidebar__foot"><span class="foot-label">Support</span><a class="foot-email" href="mailto:centrivo@digitain.com">centrivo@digitain.com</a><a class="foot-phone" href="tel:+37460700400">+374 60 700 400</a></div>
+</div>
+<div class="header">
+  <div class="h-btn"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 0 1 6 6c0 2.5-1 4-1 4H3s-1-1.5-1-4a6 6 0 0 1 6-6z"/><path d="M6.3 14a1.7 1.7 0 0 0 3.4 0"/></svg></div>
+  <div class="h-btn"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+  <div class="h-av">MP</div>
+</div>
+<main class="main-page"><div class="main-inner">
+  <div class="breadcrumb"><a href="index.html">Overview</a><span class="bc-sep">/</span><span>Platform Tools &amp; Features</span><span class="bc-sep">/</span><span style="color:var(--text);font-weight:600">PAM</span></div>
+  <h1 class="page-title">PAM — Player Account Management</h1>
+  <div class="page-sub">Full control of your player operations.</div>
+  <div class="feature-banner">
+    <div class="fb-left"><div class="fb-glow"></div><div class="fb-icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div></div>
+    <div class="fb-right">
+      <span class="fb-tag">Platform Tools &amp; Features</span>
+      <h2 class="fb-title">Full control of your player operations</h2>
+      <div class="fb-sub">The PAM system centralizes all player data into a single, powerful workspace — instant access to activity, transactions, bonuses, and risk indicators: full player profile management, KYC and fraud prevention, player categorization and automation, safe registration and authentication. PAM is a core pillar of the unified platform: multi-currency, multi-wallet architecture with centralized bonus, reporting, and responsible gaming logic.</div>
+      <a class="fb-btn" href="#" onclick="dgaGate('Activation request');return false">Request activation <svg viewBox="0 0 14 14"><path d="M3 7h8M7 3l4 4-4 4"/></svg></a>
+    </div>
+  </div>
+  <div class="tabs-bar" id="pamTabs">
+    <button class="t-btn active" id="pam-btn-profile" onclick="switchTab('profile',this)">Player Profile</button>
+    <button class="t-btn" id="pam-btn-tags" onclick="switchTab('tags',this)">Tags &amp; Categorization</button>
+    <button class="t-btn" id="pam-btn-riskrg" onclick="switchTab('riskrg',this)">Risk &amp; RG per Player</button>
+    <button class="t-btn" id="pam-btn-auto" onclick="switchTab('auto',this)">Automation</button>
+    <button class="t-btn" id="pam-btn-access" onclick="switchTab('access',this)">Access, Security &amp; Wallets</button>
+  </div>
+
+  <!-- ============ TAB 1 · PLAYER PROFILE ============ -->
+  <div class="tab-panel active" id="tab-profile">
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">An intuitive, actionable profile</div></div>
+      <div class="widget__body">
+        <p class="pam-p">More than a record — <b>a working surface</b>: complete player overview, categorization and tagging, responsible gaming limits and KPIs per player, and configurations and automation applied at player level. The PAM system centralizes all player data into a single, powerful workspace — instant access to activity, transactions, bonuses, and risk indicators. <b>Operate faster, stay compliant, and scale your business with confidence.</b></p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+          <span class="pam-tagchip">Full Player Profile Management</span>
+          <span class="pam-tagchip">KYC &amp; Fraud Prevention</span>
+          <span class="pam-tagchip">Player Categorization &amp; Automation</span>
+          <span class="pam-tagchip">Safe Registration &amp; Authentication</span>
+        </div>
+        <div class="pam-frame dga-anim">
+          <div class="pam-frame__bar"><span class="pam-frame__dot"></span><span class="pam-frame__dot"></span><span class="pam-frame__dot"></span><span class="pam-frame__url">back-office / players / player-profile</span></div>
+          <div class="pam-qc">
+            <div class="pam-avatar" style="width:40px;height:40px;font-size:15px;margin-bottom:0;flex-shrink:0">P</div>
+            <div>
+              <div class="pam-qc__name">Player #10482 <span class="pam-state">Active</span><span class="pam-qc__note">account states incl. e.g. Blocked</span></div>
+              <div class="pam-qc__meta">Username: <b>player10482</b> · Unique ID: <b>10482</b> · Wallet: <b>EUR</b></div>
+            </div>
+            <div class="pam-qc__right"><span class="pam-qc__link">Multi Account: Check</span><span class="pam-qc__btn">Actions ▾</span></div>
+          </div>
+          <div class="pam-kpis">
+            <div class="pam-kpi"><span>Total Deposits</span><b>€ 250,000</b></div>
+            <div class="pam-kpi"><span>Total Withdrawals</span><b>€ 190,000</b></div>
+            <div class="pam-kpi"><span>Turnover</span><b>€ 1,200,000</b></div>
+            <div class="pam-kpi"><span>GGR</span><b>€ 180,000</b><small>Bonus: 60,000 / Real: 120,000</small></div>
+          </div>
+          <div class="pam-tabstrip"><span>Notes</span><span>Attentions</span><span>Multi Account by App Type</span><span>Bet Limits</span><span>Blocked by Provider</span><span>Agent Limits</span><span>AML Report</span></div>
+          <div class="pam-panels">
+            <div class="pam-panel">
+              <div class="pam-panel__h">Last Activities</div>
+              <div class="pam-row"><span>Login Date</span><b>Today</b></div>
+              <div class="pam-row"><span>Last 24h Total Deposits</span><b>€ —</b></div>
+              <div class="pam-row"><span>Last 24h Total Withdrawals</span><b>€ —</b></div>
+            </div>
+            <div class="pam-panel">
+              <div class="pam-panel__h">Categorization</div>
+              <div class="pam-row"><span>Category</span><b>VIP</b></div>
+              <div class="pam-row"><span>Sport Category</span><b>New User</b></div>
+              <div class="pam-row"><span>Segments</span><b>2 active</b></div>
+            </div>
+            <div class="pam-panel">
+              <div class="pam-panel__h">Balances</div>
+              <div class="pam-row"><span>Real Balance</span><b>€ —</b></div>
+              <div class="pam-row"><span>Booked Balance</span><b>€ —</b></div>
+              <div class="pam-row"><span>Casino Bonus Balance</span><b>€ —</b></div>
+              <div class="pam-row"><span>Sport Bonus Balance</span><b>€ —</b></div>
+            </div>
+            <div class="pam-panel">
+              <div class="pam-panel__h">Verification</div>
+              <div class="pam-row"><span>Email</span><b style="color:#047857">✓ Verified · date logged</b></div>
+              <div class="pam-row"><span>Mobile</span><b style="color:#047857">✓ Verified · date logged</b></div>
+              <div class="pam-row"><span>Identity</span><b style="color:#047857">✓ Verified</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="pam-caption">Illustrative view — not actual product UI</div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">One player, one workspace</div><span style="font-size:12px;color:var(--faint)">Each step is a platform feature — click to open it</span></div>
+      <div class="widget__body">
+        <div class="dga-flow">
+          <div class="dga-step dga-anim"><div class="dga-step__num">1</div><a class="dga-step__card" href="dynamics-registration.html"><div class="dga-step__t">Registration</div><div class="dga-step__d">A configurable, protected onboarding flow creates the account.</div><span class="dga-step__go">Registration &amp; Verification →</span></a></div>
+          <div class="dga-step dga-anim"><div class="dga-step__num">2</div><a class="dga-step__card" href="dynamics-registration.html"><div class="dga-step__t">Verification</div><div class="dga-step__d">Built-in document upload and manual review — plus third-party KYC configured per project.</div><span class="dga-step__go">Registration &amp; Verification →</span></a></div>
+          <div class="dga-step dga-anim"><div class="dga-step__num">3</div><a class="dga-step__card" href="#" onclick="return pamGoTab('tags')"><div class="dga-step__t">Profile &amp; tags</div><div class="dga-step__d">Categorization and tagging organize the player the way you operate.</div><span class="dga-step__go">Tags &amp; Categorization →</span></a></div>
+          <div class="dga-step dga-anim"><div class="dga-step__num">4</div><a class="dga-step__card" href="#" onclick="return pamGoTab('auto')"><div class="dga-step__t">Automation applies</div><div class="dga-step__d">Rules act on the player the moment criteria match.</div><span class="dga-step__go">Automation →</span></a></div>
+          <div class="dga-step dga-anim"><div class="dga-step__num">5</div><a class="dga-step__card" href="dynamics-reporting.html"><div class="dga-step__t">Monitored &amp; reported</div><div class="dga-step__d">Risk, RG and reporting logic stay centralized.</div><span class="dga-step__go">Reporting &amp; Analytics →</span></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 2 · TAGS & CATEGORIZATION ============ -->
+  <div class="tab-panel" id="tab-tags">
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Tags that act in real time</div><span style="font-size:12px;color:var(--faint)">From the Dynamics product deck</span></div>
+      <div class="widget__body">
+        <p class="pam-p">Vertical and horizontal tags categorize players by connecting, differentiating, and grouping them the way you want — and actions can be taken <b>in real time</b> when behavior meets pre-defined criteria: not sometime in the future, at that exact moment.</p>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:8px">Diverse uses across the platform — click one</div>
+        <div class="pam-tags-demo">
+          <button class="pam-tag-btn active" onclick="pamTagUse('pay',this)">Payment visibility</button>
+          <button class="pam-tag-btn" onclick="pamTagUse('cat',this)">Categorization &amp; marking</button>
+          <button class="pam-tag-btn" onclick="pamTagUse('lang',this)">Multi-language &amp; currency</button>
+          <button class="pam-tag-btn" onclick="pamTagUse('svc',this)">Multi-service usage</button>
+          <button class="pam-tag-btn" onclick="pamTagUse('vip',this)">VIP &amp; lifecycle cohorts</button>
+        </div>
+        <div class="pam-tag-out" id="pamTagOut">Payment visibility — control which payment methods a player sees, by tag.</div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">From tags to Brand Automation</div></div>
+      <div class="widget__body">
+        <div class="bv-item dga-anim" style="border-bottom:none;padding:0">
+          <div class="bv-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5V8l2.5 1.5"/></svg></div>
+          <div>
+            <div class="bv-title">Predefined business rules become repeatable workflows</div>
+            <div class="bv-desc">Categorization connects to Brand Automation: configured cases trigger notifications, alerts, and workflows — reducing dependence on manual discovery. <a class="pam-link" href="#" onclick="return pamGoTab('auto')">See Brand Automation →</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 3 · RISK & RG PER PLAYER ============ -->
+  <div class="tab-panel" id="tab-riskrg">
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Responsible Gaming — per player</div><span style="font-size:12px;color:var(--faint)">Adaptable to specific regulatory requirements</span></div>
+      <div class="widget__body">
+        <div class="pam-rg-grid">
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Deposit Limits<small>Daily / weekly / monthly</small></div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Net / Loss Limits</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Bet Limits</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Self-Exclusion<small>Incl. player-initiated via site</small></div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Time Out</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Reality Check</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>RG Notification Messages</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Cooling-Off Periods</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Withdrawal Limits</div></div>
+          <div class="pam-rg-tile dga-anim"><span>✓</span><div>Access / Session Time Limits</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Player-level risk controls</div></div>
+      <div class="widget__body">
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><circle cx="6.5" cy="6" r="2.5"/><path d="M2 14c.8-2.5 3-3.5 4.5-3.5S10.2 11.5 11 14"/><circle cx="12.5" cy="6" r="2.5"/><path d="M11 10.7c1.7.2 3.4 1.2 4 3.3"/></svg></div><div><div class="feat-title">Multi-account detection</div><div class="feat-desc">Identify account relationships — supporting fraud review and bonus-abuse prevention.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon re"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l3 2"/></svg></div><div><div class="feat-title">Real-time bet monitoring</div><div class="feat-desc">Rich filters focus risk teams on the players and betting patterns that matter now.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><path d="M9 2a5 5 0 0 1 5 5c0 2.5 1 3.5 1 3.5H3s1-1 1-3.5a5 5 0 0 1 5-5z"/><path d="M7.5 14a1.5 1.5 0 0 0 3 0"/></svg></div><div><div class="feat-title">Brand Automation alerts</div><div class="feat-desc">Risk Management is notified when configured risky or unusual cases occur.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon am"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><path d="M2 9h14"/><path d="M9 2c2 2 2 12 0 14M9 2C7 4 7 14 9 16"/></svg></div><div><div class="feat-title">Geo-specific controls</div><div class="feat-desc">Geography-specific configuration applies controls appropriate to the market.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><rect x="3" y="2" width="12" height="14" rx="2"/><path d="M6 6h6M6 9h6M6 12h4"/></svg></div><div><div class="feat-title">Account controls &amp; audit history</div><div class="feat-desc">Embedded into platform operations — a clearer audit trail per player.</div></div></div>
+        </div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:14px 0 8px">Per-player controls on the profile</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="pam-tagchip">RG limits per player</span>
+          <span class="pam-tagchip">Account controls</span>
+          <span class="pam-tagchip">Audit history</span>
+          <span class="pam-tagchip">Multi-account check</span>
+          <span class="pam-tagchip">Operational review</span>
+        </div>
+        <div style="margin-top:14px">
+          <a class="dga-chip dga-anim" href="dynamics-risk.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5v6c0 4.8-3.2 8-8 10.5C7.2 19.5 4 16.3 4 11.5v-6z"/></svg></span><span><span class="dga-chip__n">Risk &amp; Compliance</span><span class="dga-chip__s" style="display:block">The full toolset — real-time monitoring, alerts, RG, and regulatory reporting.</span></span><span class="dga-chip__arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 4 · AUTOMATION AT PLAYER LEVEL ============ -->
+  <div class="tab-panel" id="tab-auto">
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Brand Automation</div><span style="font-size:12px;color:var(--faint)">Predefined rules, repeatable workflows</span></div>
+      <div class="widget__body">
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><circle cx="9" cy="9" r="3"/></svg></div><div><div class="feat-title">Dynamic segments &amp; tags</div><div class="feat-desc">Audiences that update as behavior changes — the targeting layer every engine shares.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><path d="M3 3h5l7 7-5 5-7-7z"/><circle cx="6.5" cy="6.5" r="1"/></svg></div><div><div class="feat-title">Risk &amp; monitoring alerts</div><div class="feat-desc">Risk Management notified when configured risky or unusual cases occur.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><path d="M9 2a5 5 0 0 1 5 5c0 2.5 1 3.5 1 3.5H3s1-1 1-3.5a5 5 0 0 1 5-5z"/><path d="M7.5 14a1.5 1.5 0 0 0 3 0"/></svg></div><div><div class="feat-title">Campaign workflows</div><div class="feat-desc">Approval, notification, and distribution workflows supporting cashback and promotional campaigns.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon am"><svg viewBox="0 0 18 18"><path d="M3 9h9M9 4l5 5-5 5"/></svg></div><div><div class="feat-title">High-win alerts</div><div class="feat-desc">Sportsbook and Casino high-win alerts delivered to the relevant risk managers.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">How it works: Triggers · Conditions · Actions</div></div>
+      <div class="widget__body">
+        <div class="pam-tca">
+          <div class="pam-tca__card dga-anim"><div class="pam-tca__k">The when</div><div class="pam-tca__t">Trigger</div><div class="pam-tca__d">Defines what the automation watches.</div></div>
+          <div class="pam-tca__card dga-anim"><div class="pam-tca__k">The how</div><div class="pam-tca__t">Conditions</div><div class="pam-tca__d">Define the parameters the checked component must meet.</div></div>
+          <div class="pam-tca__card dga-anim"><div class="pam-tca__k">The what</div><div class="pam-tca__t">Actions</div><div class="pam-tca__d">Define what happens once the trigger fires.</div></div>
+        </div>
+        <p class="pam-p" style="margin:12px 0 0">The same thinking as the Bonus Engine and Cashback — predefined business rules become a repeatable workflow; the platform drives it from there. <a class="pam-link" href="dynamics-bonus-engine.html">See the model in the Bonus Engine →</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 5 · ACCESS, SECURITY & WALLETS ============ -->
+  <div class="tab-panel" id="tab-access">
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">User management &amp; permissions</div><span style="font-size:12px;color:var(--faint)">From the Dynamics product deck</span></div>
+      <div class="widget__body">
+        <p class="pam-p">Create, grant, manage, and control back-office user accounts — each user gets a specific permission set, with organization structure and position set at creation.</p>
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><rect x="6" y="2" width="6" height="4" rx="1"/><rect x="2" y="12" width="5" height="4" rx="1"/><rect x="11" y="12" width="5" height="4" rx="1"/><path d="M9 6v3M4.5 12V9h9v3"/></svg></div><div><div class="feat-title">Predefined permission groups</div><div class="feat-desc">Standard permission sets for specific groups of users, available out of the box.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><circle cx="6.5" cy="6" r="2.5"/><path d="M2 14c.8-2.5 3-3.5 4.5-3.5S10.2 11.5 11 14"/><path d="M12 6l1.5 1.5L16 5"/></svg></div><div><div class="feat-title">Custom permission groups</div><div class="feat-desc">Unique groups built on top of predefined ones — or from scratch.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><path d="M9 2l2 4h5l-4 3 1.5 5L9 11l-4.5 3L6 9 2 6h5z"/></svg></div><div><div class="feat-title">Temporary permission groups</div><div class="feat-desc">Permission groups assigned with a specific expiration date.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon am"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l3 2"/></svg></div><div><div class="feat-title">Player-level monitoring</div><div class="feat-desc">Operational teams stay close to player activity — monitoring and review embedded into daily operations.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Security</div></div>
+      <div class="widget__body">
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><path d="M9 2l6 2v5c0 4-2.5 6-6 7-3.5-1-6-3-6-7V4z"/><path d="M6.5 9l2 2 3.5-4"/></svg></div><div><div class="feat-title">Personal data protection</div><div class="feat-desc">Special permissions and encryption for sensitive access — KYC, account updates, wallet history.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><rect x="3" y="2" width="12" height="14" rx="2"/><path d="M6 6h6M6 9h6M6 12h4"/></svg></div><div><div class="feat-title">Full audit logs</div><div class="feat-desc">Back-office activity covered by full audit logging.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><circle cx="9" cy="6" r="3"/><path d="M3 15c1-3 4-4 6-4s5 1 6 4"/></svg></div><div><div class="feat-title">Player-side action logs</div><div class="feat-desc">Actions performed by the player are logged.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon re"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><path d="M6 9h6"/></svg></div><div><div class="feat-title">Website-based account closure</div><div class="feat-desc">Player accounts can be managed and closed from the website — alongside player-initiated self-exclusion.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Seamless wallet logic</div></div>
+      <div class="widget__body">
+        <p class="pam-p">Seamless wallet logic connects Casino and Sportsbook play across <b>real and bonus balances</b> — reducing friction as the player moves between products and reward states.</p>
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 8h14"/></svg></div><div><div class="feat-title">One Player View</div><div class="feat-desc">Balances, activity, and reward states in one profile — across both products.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><rect x="3" y="7" width="12" height="9" rx="2"/><path d="M3 10h12M9 7v9"/><path d="M9 7c-2 0-3.5-1-3.5-2.5S7 2.5 9 4.5c2-2 3.5-1.5 3.5 0S11 7 9 7z"/></svg></div><div><div class="feat-title">Real &amp; Bonus Balances Connected</div><div class="feat-desc">Cross-product bonus journeys move players between Casino and Sportsbook without wallet friction.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><rect x="3" y="2" width="12" height="14" rx="2"/><path d="M6 6h6M6 9h6M6 12h4"/></svg></div><div><div class="feat-title">Financial &amp; Wallet Reports</div><div class="feat-desc">Wallet activity feeds the Financial and Wallet report categories for reconciliation and review.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon am"><svg viewBox="0 0 18 18"><path d="M4 6h10M4 6l2-2M4 6l2 2M14 12H4M14 12l-2-2M14 12l-2 2"/></svg></div><div><div class="feat-title">Cross-Product by Design</div><div class="feat-desc">Bonus configurations spanning Casino and Sportsbook inherit the same wallet logic.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget__head"><div class="widget__title">Player verification</div><span style="font-size:12px;color:var(--faint)">Tracked on the profile</span></div>
+      <div class="widget__body">
+        <div class="feat-grid">
+          <div class="feat-card dga-anim"><div class="feat-icon ct"><svg viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 5l7 5 7-5"/></svg></div><div><div class="feat-title">Document upload</div><div class="feat-desc">Players submit documents through the built-in registration and verification process.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon bl"><svg viewBox="0 0 18 18"><rect x="5" y="2" width="8" height="14" rx="2"/><path d="M8 13.5h2"/></svg></div><div><div class="feat-title">Manual review</div><div class="feat-desc">Back-office teams review submitted material within the platform workflow.</div></div></div>
+          <div class="feat-card dga-anim"><div class="feat-icon pu"><svg viewBox="0 0 18 18"><rect x="2" y="3" width="14" height="12" rx="2"/><circle cx="6.5" cy="8" r="1.8"/><path d="M4 13c.5-1.5 1.5-2 2.5-2s2 .5 2.5 2M11 7h4M11 10h4"/></svg></div><div><div class="feat-title">Third-party checks</div><div class="feat-desc">Specialist KYC and AML providers connect where required — configured per project.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <div class="widget">
+    <div class="widget__head"><div class="widget__title">Connects to</div><span style="font-size:12px;color:var(--faint)">PAM is a core pillar of the unified platform</span></div>
+    <div class="widget__body">
+      <div class="dga-chips">
+        <a class="dga-chip dga-anim" href="dynamics-bonus-engine.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4.5" rx="1"/><path d="M5 12.5V20a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 20v-7.5"/><path d="M12 8v13.5"/><path d="M12 8H8.5a2.5 2.5 0 1 1 0-5C10.5 3 12 5 12 8z"/><path d="M12 8h3.5a2.5 2.5 0 1 0 0-5C13.5 3 12 5 12 8z"/></svg></span><span><span class="dga-chip__n">Bonus Engine</span><span class="dga-chip__s" style="display:block">Same Triggers · Conditions · Actions model</span></span><span class="dga-chip__arrow">→</span></a>
+        <a class="dga-chip dga-anim" href="dynamics-player-engagement.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-6M13 17V7M18 17v-9"/></svg></span><span><span class="dga-chip__n">Digitain CRM</span><span class="dga-chip__s" style="display:block">Connects natively to the platform</span></span><span class="dga-chip__arrow">→</span></a>
+        <a class="dga-chip dga-anim" href="dynamics-risk.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5 20 5.5v6c0 4.8-3.2 8-8 10.5C7.2 19.5 4 16.3 4 11.5v-6z"/></svg></span><span><span class="dga-chip__n">Risk &amp; Compliance</span><span class="dga-chip__s" style="display:block">RG, fraud, AML and tax — compliance built in</span></span><span class="dga-chip__arrow">→</span></a>
+        <a class="dga-chip dga-anim" href="dynamics-reporting.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><span><span class="dga-chip__n">Reporting &amp; Analytics</span><span class="dga-chip__s" style="display:block">One dashboard, full control</span></span><span class="dga-chip__arrow">→</span></a>
+        <a class="dga-chip dga-anim" href="dynamics-payments-wallets.html"><span class="dga-chip__ic"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><span><span class="dga-chip__n">Paydrom</span><span class="dga-chip__s" style="display:block">Payments, perfected — powered by Paydrom</span></span><span class="dga-chip__arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dga-doc dga-anim"><div class="dga-doc__icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></div><div><div class="dga-doc__title">PAM deep-dive deck</div><div class="dga-doc__sub">Full back-office walkthrough — profile, wallets, lifecycle. On request.</div></div><button class="dga-doc__btn" onclick="dgaGate('PAM deep-dive deck')">Request →</button></div>
+  <div class="widget">
+    <div class="widget__head"><div class="widget__title">Actions</div></div>
+    <div class="widget__body">
+      <div class="dga-next">
+        <a class="dga-next__card dga-anim" href="dynamics-risk.html"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Risk &amp; Compliance</div><div class="dga-next__s">RG, fraud, AML and tax — compliance built in.</div></a>
+        <a class="dga-next__card dga-anim" href="dynamics-reporting.html"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Reporting &amp; Analytics</div><div class="dga-next__s">One dashboard, full control.</div></a>
+        <a class="dga-next__card dga-anim" href="dynamics-payments-wallets.html"><div class="dga-next__lbl">Next up</div><div class="dga-next__t">Payments &amp; Wallets</div><div class="dga-next__s">Payments, perfected — powered by Paydrom.</div></a>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="fb-btn" href="#" onclick="dgaGate('Activation request');return false">Request activation</a>
+        <a class="fb-btn" href="#" onclick="dgaGate('A conversation with your Account Manager');return false">Contact your Account Manager</a>
+        <a class="fb-btn" href="#">Open a ticket</a>
+      </div>
+    </div>
+  </div>
+</div></main>
+<script>
+function switchTab(id,btn){document.querySelectorAll(".tab-panel").forEach(function(p){p.classList.remove("active")});document.querySelectorAll(".t-btn").forEach(function(b){b.classList.remove("active")});document.getElementById("tab-"+id).classList.add("active");btn.classList.add("active");}
+function switchSol(id){["details","marketing"].forEach(function(s){document.getElementById("sol-"+s).style.display=s===id?"block":"none";document.getElementById("sol-btn-"+s).classList.toggle("active",s===id);});}
+function toggleAcc(h){h.parentElement.classList.toggle("open");}
+/* PAM page: open a tab from an in-page link (flow steps, cross-links) */
+function pamGoTab(id){
+  var btn=document.getElementById("pam-btn-"+id);
+  if(btn){switchTab(id,btn);var bar=document.getElementById("pamTabs");if(bar&&bar.scrollIntoView)bar.scrollIntoView({behavior:"smooth",block:"start"});}
+  return false;
+}
+/* PAM page: interactive tag-uses demo (Tab 2) */
+function pamTagUse(key,btn){
+  var uses={
+    pay:"Payment visibility — control which payment methods a player sees, by tag.",
+    cat:"Categorization & marking — vertical and horizontal tags categorize and mark players the way you want to operate.",
+    lang:"Multi-language & multi-currency — tags support multi-language and multi-currency use across the platform.",
+    svc:"Multi-service usage — the same tags apply across the platform's services.",
+    vip:"VIP & lifecycle cohorts — dynamic segments and tags identify and track VIP, new, active, dormant, or high-value audiences with no separate VIP-only module."
+  };
+  var out=document.getElementById("pamTagOut");
+  if(out&&uses[key])out.textContent=uses[key];
+  var btns=document.querySelectorAll(".pam-tag-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  if(btn)btn.classList.add("active");
+}
+</script>
+<!-- ===== DGA ENGAGEMENT LAYER v1 START (identical on every page) ===== -->
+<style id="dga-css">
+.dga-flow{display:flex;overflow-x:auto;padding:10px 2px 16px;gap:0}
+.dga-step{flex:1;min-width:148px;position:relative;padding:0 9px}
+.dga-step:not(:first-child)::before{content:"";position:absolute;left:-14px;top:15px;width:28px;height:2px;background:linear-gradient(90deg,#CBD5E1,var(--centrivo,#0F766E))}
+.dga-step__num{width:32px;height:32px;border-radius:50%;background:var(--centrivo,#0F766E);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:0 0 0 5px rgba(15,118,110,.12)}
+a.dga-step__card{display:block;background:#fff;border:1px solid var(--border,#E4E7EF);border-radius:14px;padding:13px 14px;min-height:118px;text-decoration:none;transition:all .18s}
+a.dga-step__card:hover{transform:translateY(-3px);border-color:var(--centrivo,#0F766E);box-shadow:0 8px 22px rgba(15,118,110,.14)}
+.dga-step__t{font-size:14px;font-weight:700;color:var(--text,#111827);margin-bottom:5px;line-height:1.3}
+.dga-step__d{font-size:12.5px;color:var(--muted,#6B7280);line-height:1.55}
+.dga-step__go{display:inline-block;font-size:12px;font-weight:700;color:var(--centrivo,#0F766E);margin-top:8px}
+.dga-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+a.dga-chip{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--border,#E4E7EF);border-radius:12px;padding:12px 14px;text-decoration:none;transition:all .16s}
+a.dga-chip:hover{border-color:var(--centrivo,#0F766E);transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,118,110,.12)}
+.dga-chip__ic{font-size:20px;line-height:1}
+.dga-chip__n{font-size:13.5px;font-weight:700;color:var(--text,#111827)}
+.dga-chip__s{font-size:12px;color:var(--muted,#6B7280);margin-top:2px;line-height:1.45}
+.dga-chip__arrow{margin-left:auto;color:var(--centrivo,#0F766E);font-weight:700;font-size:14px}
+.dga-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
+a.dga-next__card{background:linear-gradient(160deg,#FFFFFF,#F0FDFA);border:1px solid var(--border,#E4E7EF);border-radius:12px;padding:13px 15px;text-decoration:none;transition:all .16s;display:block}
+a.dga-next__card:hover{border-color:var(--centrivo,#0F766E);transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,118,110,.14)}
+.dga-next__lbl{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--centrivo,#0F766E);margin-bottom:4px}
+.dga-next__t{font-size:14px;font-weight:700;color:var(--text,#111827);margin-bottom:3px}
+.dga-next__s{font-size:12px;color:var(--muted,#6B7280);line-height:1.45}
+.dga-doc{display:flex;align-items:center;gap:14px;background:#0E1117;border-radius:14px;padding:16px 18px;margin:0 0 16px}
+.dga-doc__icon{font-size:26px}
+.dga-doc__title{font-size:14.5px;font-weight:700;color:#fff}
+.dga-doc__sub{font-size:12.5px;color:rgba(255,255,255,.78);margin-top:2px}
+.dga-doc__btn{margin-left:auto;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:13px;font-weight:700;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:background .15s}
+.dga-doc__btn:hover{background:#134E4A}
+.dga-anim{opacity:0;transform:translateY(10px)}
+.dga-in{opacity:1;transform:none;transition:opacity .5s ease var(--d,0s),transform .5s ease var(--d,0s)}
+.dga-progress{padding:12px 14px;border-top:1px solid rgba(255,255,255,.06);margin-top:10px}
+.dga-progress__label{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px;letter-spacing:.05em}
+.dga-progress__label b{color:#5EEAD4}
+.dga-progress__bar{height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.dga-progress__bar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#0F766E,#5EEAD4);transition:width .6s ease}
+.nav-item.dga-seen{position:relative}
+.nav-item.dga-seen::after{content:"✓";position:absolute;right:12px;color:#5EEAD4;font-size:11px;font-weight:700}
+.dga-toast{position:fixed;left:18px;bottom:18px;z-index:250;max-width:300px;background:#0E1117;border-left:3px solid #5EEAD4;border-radius:10px;padding:13px 16px;color:#fff;font-size:13.5px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);transition:all .35s}
+.dga-toast.dga-on{opacity:1;transform:none}
+.dga-fab{position:fixed;right:22px;bottom:20px;z-index:200;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:24px;font-family:inherit;font-size:13.5px;font-weight:700;padding:11px 20px;cursor:pointer;box-shadow:0 8px 24px rgba(15,118,110,.4);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .3s}
+.dga-fab.dga-on{opacity:1;pointer-events:auto;transform:none}
+.dga-fab:hover{background:#134E4A}
+.dga-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(14,17,23,.55);backdrop-filter:blur(2px)}
+.dga-modal[hidden]{display:none}
+.dga-modal__card{width:400px;max-width:92vw;background:#fff;border-radius:18px;padding:26px 26px 22px;position:relative;font-family:inherit}
+.dga-modal__x{position:absolute;top:12px;right:14px;border:none;background:none;font-size:18px;color:var(--muted,#6B7280);cursor:pointer}
+.dga-modal__icon{font-size:30px;margin-bottom:8px}
+.dga-modal__t{font-size:16px;font-weight:700;color:var(--text,#111827);margin-bottom:6px}
+.dga-modal__d{font-size:13.5px;color:var(--muted,#6B7280);line-height:1.6;margin-bottom:14px}
+.dga-modal__input{width:100%;border:1px solid var(--border,#E4E7EF);border-radius:9px;padding:10px 12px;font-family:inherit;font-size:13.5px;margin-bottom:10px;outline:none}
+.dga-modal__input:focus{border-color:var(--centrivo,#0F766E)}
+.dga-modal__btn{width:100%;background:var(--centrivo,#0F766E);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:14px;font-weight:700;padding:11px;cursor:pointer}
+.dga-modal__btn:hover{background:#134E4A}
+.dga-modal__ok{display:none;text-align:center;padding:8px 0 2px}
+.dga-modal__ok .big{font-size:34px;margin-bottom:8px}
+.dga-modal__ok p{font-size:14px;color:var(--text,#111827);line-height:1.6}
+@media (prefers-reduced-motion:reduce){.dga-anim,.dga-in,.dga-toast,.dga-fab{transition:none}.dga-anim{opacity:1;transform:none}}
+
+/* ===== NAV v2 (clarity upgrade) ===== */
+.sidebar__nav{padding:10px 0 14px}
+.sidebar__nav .nav-section{display:flex;align-items:center;font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.68);padding:0 16px;margin:16px 0 6px}
+.sidebar__nav .nav-section.dga-grp{cursor:pointer;-webkit-user-select:none;user-select:none;transition:color .15s}
+.sidebar__nav .nav-section.dga-grp:hover{color:rgba(255,255,255,.85)}
+.sidebar__nav .nav-section.dga-grp::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-left:auto;margin-right:3px;transition:transform .2s}
+.sidebar__nav .nav-section.dga-grp.dga-closed::after{transform:rotate(-45deg)}
+.sidebar__nav .nav-item{font-size:13px !important;padding:7px 12px !important;margin:1px 8px;border-radius:8px;border-left:none !important;line-height:1.35;color:rgba(255,255,255,.78)}
+.sidebar__nav .nav-item.nv-d1,.sidebar__nav .nav-item.nv-d2{margin-left:22px;border-left:1px solid rgba(255,255,255,.09) !important;border-radius:0 8px 8px 0;padding-left:12px !important}
+.sidebar__nav .nav-item.nv-d2{margin-left:34px;font-size:12.5px !important;color:rgba(255,255,255,.62)}
+.sidebar__nav .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sidebar__nav .nav-item.active{background:linear-gradient(90deg,rgba(15,118,110,.95),rgba(15,118,110,.55));color:#fff !important;font-weight:600;box-shadow:0 2px 10px rgba(15,118,110,.35)}
+.sidebar__nav .nav-item.dga-hidden{display:none}
+.nav-item.dga-seen::after{right:10px}
+
+/* ===== NAV v3: linked section headers ===== */
+.sidebar__nav a.nav-section{text-decoration:none;cursor:pointer}
+.sidebar__nav a.nav-section:hover{color:rgba(255,255,255,.9)}
+.sidebar__nav a.nav-section.on{color:#5EEAD4}
+.sidebar__nav a.nav-section .dga-tog{margin-left:auto;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.sidebar__nav a.nav-section .dga-tog::before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+.sidebar__nav a.nav-section:hover .dga-tog{background:rgba(255,255,255,.1)}
+.sidebar__nav a.nav-section.dga-closed .dga-tog::before{transform:rotate(-45deg)}
+
+/* DGA FLAGSHIP PASS v1 */
+.sidebar,.sidebar *{font-family:var(--font-cond)}
+.nav-soon,.nav-soon:hover{color:rgba(255,255,255,.35);cursor:default}
+.nav-soon-tag{margin-left:auto;font-size:8.5px;font-weight:700;letter-spacing:.09em;background:rgba(255,255,255,.09);color:rgba(255,255,255,.5);padding:2px 6px;border-radius:6px;flex-shrink:0}
+
+/* DGA FLAGSHIP PASS v2: icons+semantics */
+.dgi{width:1em;height:1em;display:inline-block;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.fb-icon,.section-card__icon{color:#fff}
+.dga-chip__ic{color:var(--centrivo,#0F766E)}
+h1,h2{margin:0;font:inherit}
+a.foot-email,a.foot-phone{display:block;text-decoration:none}
+a.foot-email:hover,a.foot-phone:hover{color:#fff}
+
+/* DGA SEARCH v1 */
+.dse-wrap{padding:12px 12px 2px}
+.dse-btn{width:100%;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:8px 11px;color:rgba(255,255,255,.55);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-cond);transition:all .15s}
+.dse-btn:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.85)}
+.dse-btn .dgi{width:13px;height:13px}
+.dse-btn__kbd{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.05em;background:rgba(255,255,255,.09);border-radius:5px;padding:2px 6px;color:rgba(255,255,255,.4)}
+.dse-ov{position:fixed;inset:0;background:rgba(10,14,20,.55);z-index:1300;display:none;align-items:flex-start;justify-content:center;padding:11vh 16px 16px}
+.dse-ov.on{display:flex}
+.dse-card{width:580px;max-width:94vw;background:#fff;border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.35);overflow:hidden;font-family:var(--font)}
+.dse-top{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.dse-top .dgi{color:var(--muted);width:17px;height:17px;flex-shrink:0}
+.dse-in{flex:1;border:none;outline:none;font-size:15.5px;font-family:var(--font);color:var(--text);background:transparent}
+.dse-esc{font-size:10px;font-weight:700;color:var(--faint);border:1px solid var(--border);border-radius:5px;padding:2px 6px;cursor:pointer}
+.dse-res{max-height:46vh;overflow-y:auto}
+.dse-r{padding:10px 18px;cursor:pointer;border-bottom:1px solid var(--surface)}
+.dse-r.on{background:var(--centrivo-light)}
+.dse-r__p{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--centrivo);margin-bottom:2px}
+.dse-r__h{font-size:14px;font-weight:600;color:var(--text)}
+.dse-r__x{font-size:12px;color:var(--muted);margin-top:1px;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dse-r mark{background:rgba(15,118,110,.16);color:var(--centrivo2);border-radius:3px;padding:0 1px}
+.dse-empty{padding:22px 18px;font-size:13.5px;color:var(--muted);text-align:center}
+.dse-foot{display:flex;gap:14px;padding:9px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--faint)}
+</style>
+<div class="dga-modal" id="dgaModal" hidden>
+  <div class="dga-modal__card">
+    <button class="dga-modal__x" onclick="dgaClose()">✕</button>
+    <div id="dgaForm">
+      <div class="dga-modal__icon"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></div>
+      <div class="dga-modal__t" id="dgaTitle">Request</div>
+      <div class="dga-modal__d">Prepared for partners and delivered personally. Send a request and your Account Manager will follow up with the full material.</div>
+      <input class="dga-modal__input" id="dgaMail" type="email" placeholder="you@company.com">
+      <button class="dga-modal__btn" onclick="dgaSend()">Send request</button>
+    </div>
+    <div class="dga-modal__ok" id="dgaOk"><div class="big"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.5 2.7 4.5-5.5"/></svg></div><p><b>Request noted.</b><br>Your Account Manager will follow up shortly.</p></div>
+  </div>
+</div>
+<script id="dga-js">
+(function(){
+  var LS={get:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  var here=(location.pathname.split('/').pop()||'index.html');
+  var visited=LS.get('dgd.visited',[]);
+  if(visited.indexOf(here)<0){visited.push(here);LS.set('dgd.visited',visited);}
+  var items=[].slice.call(document.querySelectorAll('.sidebar__nav .nav-item'));
+  var hrefs=items.map(function(a){return a.getAttribute('href')});
+  items.forEach(function(a){if(visited.indexOf(a.getAttribute('href'))>=0)a.classList.add('dga-seen')});
+  var seen=hrefs.filter(function(h){return visited.indexOf(h)>=0}).length;
+  var nav=document.querySelector('.sidebar__nav');
+  if(nav){var p=document.createElement('div');p.className='dga-progress';p.innerHTML='<div class="dga-progress__label">EXPLORED <b>'+seen+'</b> / '+hrefs.length+'</div><div class="dga-progress__bar"><i style="width:'+Math.round(seen/hrefs.length*100)+'%"></i></div>';nav.appendChild(p);}
+  var anims=[].slice.call(document.querySelectorAll('.dga-anim'));
+  if('IntersectionObserver' in window && anims.length){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('dga-in');io.unobserve(e.target)}})},{threshold:.15});
+    anims.forEach(function(el,i){el.style.setProperty('--d',(i%8)*.09+'s');io.observe(el)});
+  } else {anims.forEach(function(el){el.classList.add('dga-in')})}
+  function toast(msg){var t=document.createElement('div');t.className='dga-toast';t.innerHTML=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('dga-on')});setTimeout(function(){t.classList.remove('dga-on');setTimeout(function(){t.remove()},400)},6500);}
+  var shown=LS.get('dgd.toasts',[]);
+  function once(id,msg){if(shown.indexOf(id)<0){shown.push(id);LS.set('dgd.toasts',shown);setTimeout(function(){toast(msg)},900);return true}return false}
+  var J=['dynamics-acquisition.html','dynamics-affiliate.html','dynamics-referral.html','dynamics-campaigns.html','dynamics-registration.html','dynamics-first-deposit.html','dynamics-retention.html','dynamics-cashback.html','dynamics-bonuses.html','dynamics-crm-campaigns.html','dynamics-reactivation.html','dynamics-vip.html'];
+  var T=['dynamics-bonus-engine.html','dynamics-player-engagement.html','dynamics-gamification.html','dynamics-lobby.html','dynamics-cms.html','dynamics-payments-wallets.html','dynamics-pam.html','dynamics-reporting.html'];
+  function all(list){return list.every(function(f){return visited.indexOf(f)>=0})}
+  if(visited.length===1){once('hello','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11.5V16"/></svg> <b>Tip:</b> pages you visit get a ✓ in the menu. Explore the full journey — it pays off.')}
+  else if(all(J)&&all(T)&&hrefs.every(function(h){return visited.indexOf(h)>=0})){once('all','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 18h18"/><path d="m4 15-1-8 5 3 4-6 4 6 5-3-1 8z"/></svg> <b>Full platform explored.</b> Your Account Manager owes you a coffee — ask for it.')}
+  else if(all(J)){once('journey','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 22V3"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg> <b>Player Journey explored end-to-end.</b> Ask your Account Manager for the full playbook.')}
+  else if(all(T)){once('tools','<svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg> <b>Every tool in the box — seen.</b> Time to put them to work on your brand.')}
+  var fab=document.createElement('button');fab.className='dga-fab';fab.textContent='Request activation';fab.onclick=function(){dgaGate('Activation request')};document.body.appendChild(fab);
+  window.addEventListener('scroll',function(){fab.classList.toggle('dga-on',window.scrollY>480)},{passive:true});
+  var modal=document.getElementById('dgaModal');
+  window.dgaGate=function(title){document.getElementById('dgaTitle').textContent=title;document.getElementById('dgaForm').style.display='block';document.getElementById('dgaOk').style.display='none';modal.hidden=false;};
+  window.dgaClose=function(){modal.hidden=true;};
+  window.dgaSend=function(){document.getElementById('dgaForm').style.display='none';document.getElementById('dgaOk').style.display='block';};
+  modal.addEventListener('click',function(e){if(e.target===modal)dgaClose()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)dgaClose()});
+})();
+
+/* NAV v3: depth classes + linked headers + collapse-by-default */
+(function(){
+  var nav=document.querySelector('.sidebar__nav'); if(!nav) return;
+  var here=(location.pathname.split('/').pop()||'index.html');
+  [].forEach.call(nav.querySelectorAll('.nav-item'),function(a){
+    var m=(a.getAttribute('style')||'').match(/padding-left:\s*(\d+)/);
+    var pl=m?parseInt(m[1],10):0;
+    a.classList.add('nv-d'+(pl>=34?2:(pl>=26?1:0)));
+  });
+  [].forEach.call(nav.querySelectorAll('a.nav-section'),function(h){
+    if(h.getAttribute('href')===here)h.classList.add('on');
+  });
+  var state={};try{state=JSON.parse(localStorage.getItem('dgd.nav')||'{}')||{}}catch(e){}
+  var sections=[].slice.call(nav.querySelectorAll('.nav-section'));
+  sections.forEach(function(h){
+    var items=[],el=h.nextElementSibling;
+    while(el&&!el.classList.contains('nav-section')&&!el.classList.contains('dga-progress')){
+      if(el.classList.contains('nav-item')||el.classList.contains('nav-link'))items.push(el);
+      el=el.nextElementSibling;
+    }
+    var key=(h.textContent||'').trim();
+    if(items.length<3||key==='General')return;
+    var isLink=(h.tagName==='A');
+    var hasActive=items.some(function(i){return i.classList.contains('active')})||(isLink&&h.getAttribute('href')===here);
+    var closed=(key in state)?!!state[key]:true;
+    if(hasActive)closed=false;
+    function apply(){h.classList.toggle('dga-closed',closed);items.forEach(function(i){i.classList.toggle('dga-hidden',closed)});}
+    apply();
+    function flip(){closed=!closed;state[key]=closed;try{localStorage.setItem('dgd.nav',JSON.stringify(state))}catch(err){}apply();}
+    if(isLink){
+      var tg=document.createElement('span');tg.className='dga-tog';
+      tg.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();flip();});
+      h.appendChild(tg);
+    } else {
+      h.classList.add('dga-grp');
+      h.addEventListener('click',flip);
+    }
+  });
+})();
+</script>
+<!-- ===== DGA ENGAGEMENT LAYER v1 END ===== -->
+
+<!-- ===== DGA SEARCH v1 ===== -->
+<div class="dse-ov" id="dseOv" onclick="if(event.target===this)dseClose()">
+  <div class="dse-card">
+    <div class="dse-top"><svg class="dgi" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m15.8 15.8 5.2 5.2"/></svg><input class="dse-in" id="dseIn" placeholder="Search the Client Area&hellip;" autocomplete="off"><span class="dse-esc" onclick="dseClose()">ESC</span></div>
+    <div class="dse-res" id="dseRes"></div>
+    <div class="dse-foot"><span>&uarr;&darr; navigate</span><span>&crarr; open</span><span>esc close</span></div>
+  </div>
+</div>
+<script>
+var DGA_IDX = [{"u":"dynamics-acquisition.html","t":"Acquisition","k":"acquisition everything need acquire activate platform math digitain bonus guides ltv cac ratio casino norm where players come three routes funnel pick explore affiliate channel","s":[["Acquisition","Everything you need to acquire and activate — in one platform."],["The acquisition math","From the Digitain bonus guides ≥ 3× LTV / CAC ratio · casino norm 4–6×…"],["Where players come from","Three routes into the funnel — pick one to explore Affiliate channel R…"]]},{"u":"dynamics-affiliate.html","t":"Affiliate","k":"affiliate click revenue performance traffic measured publishers streamers media buyers why digitain unifies deals money commercial engine commission constructor deal can negotiate flat progressive tracking integrity attributed live real-time source report scale operations flexible system many brands account management dedicated manager assignment marketing programme brand","s":[["Affiliate — From Click to Revenue","Performance traffic, measured. Publishers, streamers, and media buyers…"],["Why Digitain Affiliate","Performance traffic, measured. Digitain Affiliate unifies affiliate ma…"],["Deals & Money — the commercial engine","Commission Constructor — Any Deal You Can Negotiate Flat, progressive,…"],["Tracking & Integrity — every click attributed","Live Click Tracking Real-time click source in the Live Click report —…"],["Scale & Operations — one flexible system, many brands","Affiliate Account Management Dedicated affiliate manager assignment, m…"],["Marketing the Programme — your brand, their reach","Campaign Management Public or private campaigns with geotargeting per…"],["Prove & Protect — reporting, security, migration","The Report Catalog — nine reports per brand Live Click (clicks, click…"],["Business Value","Complete Visibility and Control Scale acquisition with complete visibi…"],["What affiliate marketing actually is","From the Gaming Academy affiliate guide Affiliate marketing is perform…"],["The three-party triangle — click a party to see its role","From the Gaming Academy affiliate guide Operator Owns the product Affi…"],["Six kinds of affiliate — know who you're dealing with","From the Gaming Academy affiliate guide SEO / Content sites Review sit…"],["The four commission models — when and how much you pay","From the Gaming Academy affiliate guide CPA — Cost Per Acquisition $50…"],["Model matcher — pick the affiliate, get the deal","From the Gaming Academy affiliate guide Media buyer Paid ads, fast vol…"],["The operator side — what base do you calculate on?","From the Digitain bonus management guide Model Calculation base Typica…"],["The Commission Constructor runs all of them","Whatever deal you negotiate, Digitain Affiliate can compute it: flat,…"]]},{"u":"dynamics-bonus-engine.html","t":"Bonus Engine","k":"bonus engine promotional budget under control configurable environment creating managing distributing campaign composer model learn triggers conditions actions assembled same three blocks built convert not just configure redesigned player-facing experience bonus-manageme inside operational toolkit dynamics product deck stacked wallets players hold coverage reliability casino vendors","s":[["Bonus Engine — Your Promotional Budget, Under Control","A configurable environment for creating, managing, and distributing pr…"],["Campaign Composer — one model to learn: Triggers · Conditions · Actions","Every campaign in the engine is assembled from the same three blocks.…"],["Built to convert, not just to configure","A Redesigned Player-Facing Experience The player-facing bonus-manageme…"],["Inside the engine — the operational toolkit","From the Dynamics product deck Stacked Bonus Wallets Players hold an u…"],["Coverage and operational reliability","80+ casino vendors covered by free-spin integrations — provider- or ga…"],["Business Impact","From isolated promotions to coordinated player journeys: broad reward…"],["Three problems a bonus solves — and what happens without one","From the Digitain bonus guides Acquisition The player is choosing betw…"],["Why bonuses decide the P&L — not just the promo calendar","From the Digitain bonus guides A bonus is a business tool, not a gift…"],["The bonus-level spectrum — bonus spend as a share of GGR","From the Digitain bonus guides 0% Business dies No acquisition. No ret…"],["Retention economics — the same 1,000 players, two strategies","From the Digitain bonus guides Metric Without retention (low bonus) Wi…"],["Wagering requirements — how WR sets the real cost of a bonus","From the Digitain bonus guides WR (playthrough) What it means per €100…"],["Bonus Calibrator — pick a segment, get the right size","From the Digitain bonus guides Micro Player Spin €0.10–0.25 · GGR €15–…"],["Free Spins — quantity × value = a meaningful session","From the Digitain bonus guides No. of FS Value Real gameplay Assessmen…"],["Loyalty points — motivation through visible progress","From the Digitain bonus guides ★ The visible-progress rule: time to th…"],["Delivery timing — the same bonus, four very different moments","From the Digitain bonus guides After registration — within 24h The pla…"]]},{"u":"dynamics-bonuses.html","t":"Bonuses & Tournaments","k":"bonuses tournaments keep players playing automatically beyond acquisition offers opera retention triggers rewards campaigns trigger behaviors matter wagering activity cumul competition engine casino live through relum integration competitive mech why retains turn routine play event mechanics tournament leaderboard how see weekend slots race demo page","s":[["Bonuses & Tournaments","Keep players playing — automatically. Beyond acquisition offers, opera…"],["Retention triggers & rewards","Campaigns trigger on the behaviors that matter Wagering Activity Cumul…"],["Tournaments — Competition as a Retention Engine","Casino tournaments live through the Relum integration Competitive mech…"],["Why it retains","Tournaments turn routine play into an event: competitive mechanics and…"],["Tournament leaderboard — how players see it","Live through Relum Weekend Slots Race Demo tournament page Prize fund…"],["What a healthy bonus programme returns","From the Digitain bonus guides 38–48% Normal M1→M2 retention with a he…"]]},{"u":"dynamics-campaigns.html","t":"Campaigns","k":"campaigns acquisition activation hub everything need acquire activate platform bonuses about first touch active player bonus engine create automate optimize acro key features launch smarter manage distribute welcome offers what hours worth digitain guides delivered within hou promo codes reach channel connect external marketing live","s":[["Campaigns — The Acquisition & Activation Hub","Everything you need to acquire and activate — in one platform. Bonuses…"],["About","Everything you need to acquire and activate — in one platform. Bonuses…"],["From first touch to active player","1 Bonus Engine campaigns Create, automate, and optimize campaigns acro…"],["Key Features","Bonus Engine — Launch Smarter Campaigns Create, manage, and distribute…"],["Welcome offers — what the first 24 hours are worth","From the Digitain bonus guides +25–40% Bonuses delivered within 24 hou…"],["Promo Codes — Reach Every Channel","What promo codes do Connect external marketing to live bonus & real-mo…"]]},{"u":"dynamics-cashback.html","t":"Cashback","k":"cashback reward smarter retain longer configurable regular model casino sportsbook campa loss moment digitain bonus guides why players quit hours automated scheduled retention deep configuration designed how campaign runs define period qualification thresholds perce player targeting use segments categories tags lifecycle status align coordination coordinated","s":[["Cashback — Reward Smarter. Retain Longer.","A configurable Regular Cashback model for Casino and Sportsbook. Campa…"],["The loss moment","From the Digitain bonus guides The loss · why players quit 2–3 hours a…"],["Regular Cashback — Automated, Scheduled Retention","One scheduled model, deep configuration. Regular Cashback is designed…"],["How a scheduled cashback campaign runs","1 Define the campaign Campaign period, qualification thresholds, perce…"],["Player Targeting","Use segments, categories, tags, and lifecycle status to align cashback…"],["Reward and Bonus Coordination","Cashback is coordinated with the wider Bonus Engine so reward conditio…"],["Operational Control","Configure campaign periods, qualification thresholds, percentages, cap…"],["Performance Visibility","Track campaign participation, eligible Net Loss, rewards issued, and p…"],["Business Impact","Predictable, targeted retention campaigns without relying on a generic…"],["What cashback really costs","From the Digitain bonus guides Typical cashback is 10–20% of losses —…"],["Run the arithmetic","From the Digitain bonus guides € player losses this period 10% 15% 20%…"],["Cashback timing, cost and protection","From the Digitain bonus guides 60%+ back same day A cashback reward th…"]]},{"u":"dynamics-cms.html","t":"CMS & Promotions","k":"cms promotions control player-facing experience without development queue cont core scope lobby content structure dynamic management see trans mobile-compatible back office make instant website changes operational inte brand dynamics product deck one-stop shop configuring new customization highly flexible customer-focused what homepage zones managed yourbrand com","s":[["CMS & Promotions","Control the player-facing experience without a development queue: cont…"],["Core CMS Scope","● Lobby content and structure — dynamic management (see Lobby) ● Trans…"],["Mobile-Compatible Back Office","Make instant website changes from a mobile-compatible operational inte…"],["Brand Management","From the Dynamics product deck A one-stop shop for configuring a new b…"],["UI Customization","From the Dynamics product deck Highly flexible and customer-focused —…"],["What you control","Homepage zones — managed from the CMS yourbrand.com Navigation & categ…"],["Promotions, engagement & communication","Banner & Promotional Content Create and manage banners and promotional…"],["No release cycle","The whole point, in one strip Edit in the back office Content, transla…"],["Built-In Player Communication","Four channels, one platform — pick one Email SMS Push Inbox Email. Cam…"]]},{"u":"dynamics-crm-campaigns.html","t":"Communication & CRM Campaigns","k":"communication crm campaigns coordinate player lifecycle operational environment buil native tools built built-in solution supports email sms push notifications pla extended channels digitain product optional ecosystem runs platform perso campaign types simple general personalized bulk communicat customer journey automation visual builder maps tracks optimizes experience","s":[["Communication & CRM Campaigns","Coordinate the player lifecycle from one operational environment. Buil…"],["Native Communication Tools — Built In","The built-in solution supports Email, SMS, Push notifications, and Pla…"],["Extended Channels — the Digitain CRM Product","Optional — native to the ecosystem, runs with any platform Email Perso…"],["Campaign Types","Simple Campaign General notifications and personalized bulk communicat…"],["Customer Journey Automation","A visual journey builder maps, tracks, and optimizes the experience ac…"],["Journey builder — try it","Illustrative demo Communications Send Email Send Inbox Message Send SM…"],["Campaign Metrics Management","Primary and secondary KPIs by period and segment: average deposits, av…"]]},{"u":"dynamics-first-deposit.html","t":"First Deposit & First Bet","k":"first deposit bet turn new registrations depositing players registration habit step platform feature click open com week decides player digitain bonus guides hour choice hours what welcome offer changes really costs wagering requirements mean real cos six ways converts pick mechanic see does first-deposit frictionless","s":[["First Deposit & First Bet","Turn new registrations into depositing players. Every registration is…"],["From registration to deposit habit","Every step is a platform feature — click to open it 1 Registration com…"],["The first week decides the player","From the Digitain bonus guides Hour 0 · the choice Hours 0–24 · the ho…"],["What a welcome offer changes","From the Digitain bonus guides With a welcome offer Registrations 100%…"],["What a welcome bonus really costs","From the Digitain bonus guides Wagering requirements mean the real cos…"],["Six ways the platform converts the deposit","Pick a mechanic — see what it does. Welcome choice First-deposit bonus…"],["Frictionless Payments, Powered by Paydrom","Extensive method coverage across providers, local methods by market, m…"],["Business Impact","Increased registration-to-deposit conversion Faster time-to-first-depo…"]]},{"u":"dynamics-gamification.html","t":"Gamification","k":"gamification built-in engine connects interactive mechanics wit booster promotional wheel machine layouts grid box illustrative machines spin distribution dynamics product deck promo machi configuration reporting connections dynamic back-office configure front end casino tournaments through relum live integration use competi impact promotions become visible measurable","s":[["Gamification","A built-in Gamification Engine that connects interactive mechanics wit…"],["Booster promotional engine","Wheel — one of the machine layouts (Wheel · Grid · Box). Illustrative…"],["Machines & spin distribution","From the Dynamics product deck Promo Machines — Wheel, Grid, Box Machi…"],["Configuration, reporting, connections","Dynamic Back-Office Configuration Configure the gamification front end…"],["Casino Tournaments through Relum","Casino tournaments are live through the Relum integration. Use competi…"],["Impact","Promotions become more visible, interactive, and measurable. Dynamic b…"]]},{"u":"dynamics-growth.html","t":"Growth Strategies & Success Stories","k":"growth strategies success stories partner being prepared will publish here once","s":[["Growth Strategies & Success Stories",""],["Success Stories","Partner growth stories are being prepared and will publish here once a…"]]},{"u":"dynamics-lobby.html","t":"Lobby & Game Management","k":"lobby game management broad content-management control across casino lobbies player-faci full operator over content reorder curate con scale through digitain games aggregator wider ecosystem offers translation dynamic naming manage translations dynamically name categories other eleme banners promotional placements create support bonus mobile-compatible back office make","s":[["Lobby & Game Management","Broad content-management control across casino lobbies and player-faci…"],["Lobby Management","Full operator control over lobby content: reorder and curate lobby con…"],["Casino Content at Scale","Through Digitain's Casino Games Aggregator, the wider ecosystem offers…"],["Translation & Dynamic Naming","Manage translations and dynamically name categories and other UI eleme…"],["Banners & Promotional Placements","Create and manage banners and promotional content that support Bonus E…"],["Mobile-Compatible Back Office","Make instant website changes from a mobile-compatible operational inte…"],["Widget Catalogue","Collection Widgets Curated game collections organized by vendor or the…"],["Business Impact","● Direct control over content, localization, naming, and promotional p…"]]},{"u":"dynamics-migration.html","t":"Migration","k":"sportsbook proven now put platform behind path sportsbook-only full digitain igaming back office wallet player view already run odds trading what adds casino next games providers thr migration managed transition phase feature click open integ questions operator asks answered straight will lose brand identity frontend","s":[["Your Sportsbook Is Proven. Now Put a Platform Behind It.","The path from Sportsbook-only to the full Digitain iGaming Platform. M…"],["One back office, one wallet, one player view","You already run your sportsbook on Digitain — the odds, the trading, t…"],["What the platform adds","A casino next to your sportsbook 55,000+ games from 360+ providers thr…"],["The migration path — a managed transition","Every phase is a platform feature — click to open it 1 Phase 1 · Integ…"],["The questions every operator asks — answered straight","\"Will I lose my brand identity?\" No — the frontend is yours. DG Builde…"],["Ready to look at it seriously?","Ask your Account Manager for a migration assessment: your setup, your…"]]},{"u":"index.html","t":"Platform Overview","k":"digitain igaming platform advanced flexibility resilience ecosystem behind connected player account management wallet paymen glance click product explore pam why operators choose five reasons pick see what lifecycle engines confi native mobile applications ios android dynamics deck integrates key metrics scale performance daily transactions party","s":[["Digitain iGaming Platform","Digitain's advanced iGaming platform — flexibility, resilience, and mo…"],["The Ecosystem Behind the Platform","One connected ecosystem — player account management, wallet and paymen…"],["The ecosystem at a glance","Click any product to explore it Digitain iGaming Platform PAM · Wallet…"],["Why Operators Choose the Platform","Five reasons — pick one, see what's behind it. Lifecycle Engines Confi…"],["Native Mobile Applications — iOS & Android","From the Dynamics product deck The platform integrates with native iOS…"],["Key Metrics","Platform scale and performance at a glance. Daily Transactions 250M+ D…"],["3rd Party Integrations","Connect the tools your teams already use — the integration catalogue f…"],["Our Partners","200+ active partner brands run on the Digitain iGaming Platform. Hover…"],["Licenses & Certifications","GLI 19 and GLI 33 certified — certification passed in December 2021. G…"]]},{"u":"dynamics-pam.html","t":"PAM","k":"pam player account management full control operations platform tools features system centralizes data single powerful wor intuitive actionable profile than record working surface complete overview cat workspace each step feature click open registration tags act real time dynamics product deck vertical horizontal categorize brand automation","s":[["PAM — Player Account Management","Full control of your player operations. Platform Tools & Features"],["Full control of your player operations","The PAM system centralizes all player data into a single, powerful wor…"],["An intuitive, actionable profile","More than a record — a working surface : complete player overview, cat…"],["One player, one workspace","Each step is a platform feature — click to open it 1 Registration A co…"],["Tags that act in real time","From the Dynamics product deck Vertical and horizontal tags categorize…"],["From tags to Brand Automation","Predefined business rules become repeatable workflows Categorization c…"],["Responsible Gaming — per player","Adaptable to specific regulatory requirements ✓ Deposit Limits Daily /…"],["Player-level risk controls","Multi-account detection Identify account relationships — supporting fr…"],["Brand Automation","Predefined rules, repeatable workflows Dynamic segments & tags Audienc…"],["How it works: Triggers · Conditions · Actions","The when Trigger Defines what the automation watches. The how Conditio…"],["User management & permissions","From the Dynamics product deck Create, grant, manage, and control back…"],["Security","Personal data protection Special permissions and encryption for sensit…"],["Seamless wallet logic","Seamless wallet logic connects Casino and Sportsbook play across real…"],["Player verification","Tracked on the profile Document upload Players submit documents throug…"],["Connects to","PAM is a core pillar of the unified platform Bonus Engine Same Trigger…"]]},{"u":"dynamics-payments-wallets.html","t":"Payments & Wallets","k":"payments perfected deposits withdrawals run paydrom digitain dedicated payment when player each stop platform capability click optimized cashier advanced multi-currency multi-wallet multiple wallets eur fiat usd btc crypto illustrativ brand automation predefined rules repeatable workflows dynamic segments tags audiences update behavior changes how works triggers","s":[["Payments, Perfected","Deposits and withdrawals run on Paydrom, Digitain's dedicated payment…"],["When a player deposits","Each stop is a platform capability — click it 1 Optimized cashier The…"],["Advanced Multi-Currency & Multi-Wallet","One player · multiple wallets EUR fiat USD fiat BTC crypto Illustrativ…"],["Brand Automation — Predefined Rules, Repeatable Workflows","Dynamic Segments & Tags Audiences that update as behavior changes — sh…"],["How It Works: Triggers · Conditions · Actions","Triggers A Trigger defines what the automation watches Conditions Cond…"]]},{"u":"dynamics-player-engagement.html","t":"CRM & Player Engagement","k":"crm player engagement digitain ecosystem command center optiona about three pillars flexible data management tools identifying unique what operators get attract new customers better reach similar groups players retain powered full segments campaigns journeys draw picture key modules capabilities marketing sales service gamification loyalty ana","s":[["CRM & Player Engagement","Digitain CRM is the ecosystem's engagement command center — an optiona…"],["About","Three pillars: flexible data management tools for identifying unique c…"],["What operators get","Attract New Customers Better Reach Similar Groups Of Players Retain Ex…"],["Powered by full player data","Segments, campaigns and journeys draw on the full picture: players, sp…"],["Key Modules & Capabilities","Key Modules Marketing · Sales · Service · Gamification · Loyalty · Ana…"],["Why teams stay flexible","Engagement & Rewards Tools Tools for building gamification and loyalty…"],["CRM Gamification, Loyalty & Administration","Missions & Tasks Personalized missions by segment with completion-time…"],["Deployment","Digitain CRM connects natively to the platform and runs standalone wit…"]]},{"u":"dynamics-player-journey.html","t":"Player Journey","k":"player journey complete lifecycle first click vip end stage platform capability open acquisition five moments right offer each digitain bonus guides day stranger days new","s":[["Player Journey","The complete player lifecycle — from first click to VIP."],["The player lifecycle — end to end","Every stage is a platform capability — click to open it 1 Acquisition…"],["One journey, five moments — and the right offer for each","From the Digitain bonus guides 1 Day 1 Stranger 2 Days 2–7 New Player…"]]},{"u":"dynamics-reactivation.html","t":"Reactivation","k":"reactivation bring dormant players back churned already know brand winning them costs less how player comes step platform feature click open dormancy detecte clock digitain bonus guides day distraction window win-back new acquisition cost put play acqui what should key features detect automatically dynamic segments","s":[["Reactivation — Bring Dormant Players Back","Churned players already know your brand; winning them back costs less…"],["How a dormant player comes back","Every step is a platform feature — click to open it 1 Dormancy detecte…"],["The dormancy clock","From the Digitain bonus guides Day 3 · the distraction window Day 7+ ·…"],["Win-back vs. new acquisition","From the Digitain bonus guides Cost to put a player back in play Acqui…"],["What winning a player back should cost","From the Digitain bonus guides Winning back a dormant player is 3–5× c…"],["Key Features","Detect Dormancy Automatically Dynamic player segments group players by…"]]},{"u":"dynamics-referral.html","t":"Referral","k":"referral turn players best channel better-qualified player rewards about acquire high-quality through people who know brand how becomes share shares unique link one-click shari key features lower customer acquisition costs reduce dependency paid channels programme configurable milestones milestone registration mechanic referred friend registers thro","s":[["Referral — Turn Players into Your Best Channel","Turn every referral into a better-qualified player. Referral rewards w…"],["About","Acquire high-quality players through the people who know your brand be…"],["How a referral becomes a player","1 Share The player shares their unique referral link — one-click shari…"],["Key Features","Lower Customer Acquisition Costs Reduce dependency on paid channels wi…"],["One Programme, Configurable Milestones","Milestone 1 · Registration Mechanic The referred friend registers thro…"]]},{"u":"dynamics-registration.html","t":"Registration & Verification","k":"registration verification build onboarding around brand player market dynamic page builder shape experience instead forcing built-in manual industry-standard process document upload operator third-party kyc aml integrations where automated identity database checks requir conversion-aware operationally controlled combined page-builder approach keeps connect campaigns can form part broader","s":[["Registration & Verification","Build onboarding around the brand, player, and market. Registration is…"],["Dynamic Registration Page Builder","Shape the registration experience instead of forcing every market into…"],["Built-In Manual Verification","An industry-standard process for player document upload and operator v…"],["Third-Party KYC & AML Integrations","Where automated identity, document, database, or AML checks are requir…"],["Conversion-Aware, Operationally Controlled","The combined page-builder and verification approach keeps onboarding c…"],["Connect Verification to Campaigns","Registration and verification can form part of a broader activation jo…"],["Form builder demo — compose a registration form","Interactive demo Market A Market B Available fields — click to add or…"],["KYC & Verification Providers","Automated or specialist checks connect through third-party KYC and AML…"],["Localization Through the Back Office","Translations and UI naming are managed through the back-office content…"],["Two Coordinated Layers — Native and Third-Party","Native layer ✓ Registration Page Builder — fully customizable journey…"],["Why the first 24 hours matter","From the Digitain bonus guides +25–40% Bonuses delivered within 24 hou…"],["Business Impact","A conversion-aware, operationally controlled onboarding journey Locali…"]]},{"u":"dynamics-reporting.html","t":"Reporting & Analytics","k":"reporting analytics real-time metrics reports review player activity game performan capabilities live business information build perfect view toggle off dashboard yours compose pla management monitor measure analyze centralized interactive way extracti back-office modules sits inside operational back office dashboards rep report suite nine families jurisdiction-oriented","s":[["Reporting & Analytics","Real-time metrics and reports — review player activity, game performan…"],["Capabilities","Live Business Information Review live business information from the op…"],["Build your perfect view","Toggle capabilities on and off — the dashboard is yours to compose Pla…"],["Dashboard Management","Monitor · Measure · Analyze A centralized, interactive way of extracti…"],["Back-office modules","Reporting sits inside the operational back office — dashboards and rep…"],["The report suite","Nine report families + jurisdiction-oriented categories Report familie…"]]},{"u":"dynamics-retention.html","t":"Retention","k":"retention keep players engaged satisfied returning continuously math digitain bonus guides programme when each tool fires days build habit months loop step platform feature click open play activity","s":[["Retention","Keep players engaged, satisfied, and returning — continuously."],["The retention math","From the Digitain bonus guides No retention programme With retention p…"],["When each tool fires","From the Digitain bonus guides Days 2–7 · build the habit Months 1–3 ·…"],["The retention loop","Every step is a platform feature — click to open it 1 Play Activity an…"]]},{"u":"dynamics-risk.html","t":"Risk & Compliance","k":"risk compliance player protection operational oversight built daily workflows about gli certification passed december adapted stack six layers platform responsible gaming limits self-exclusion player-protection tool deposit weekly monthly net loss bet fraud management toolset monitor alert real-time monitoring incoming betting traffic moni third-party kyc aml","s":[["Risk & Compliance","Player protection and operational oversight built into daily workflows…"],["About","GLI 19 and GLI 33 certification passed in December 2021, adapted for m…"],["The compliance stack — six layers, one platform","1 Responsible Gaming Limits, self-exclusion and player-protection tool…"],["Responsible Gaming","Deposit Limits Daily / weekly / monthly Net / Loss Limits Bet Limits S…"],["Risk & Fraud Management Toolset","Monitor & Alert Real-time bet monitoring Incoming betting traffic moni…"],["Third-Party KYC & AML Connections","Where automated identity, document, database, or AML checks are requir…"],["Flexible Calculation Periods","Responsible gaming limits can use different time-calculation models ac…"],["Regulatory Reporting","Jurisdiction-oriented reporting for markets including Romania, Greece,…"],["Certification & Resilience","GLI 19 and GLI 33 certification passed in December 2021, adapted for m…"]]},{"u":"dynamics-tools.html","t":"Platform Tools & Features","k":"platform tools features player account management wallet payment infrastructure bonus","s":[["Platform Tools & Features","Player account management, wallet and payment infrastructure, bonus an…"]]},{"u":"dynamics-vip.html","t":"VIP Development","k":"vip development top players deserve small share drives large ngr separate vip- how player becomes step platform feature click open play data ever math digitain bonus guides revenue concentration get treatment right high roller big key features identify tier dynamic segments categories tags","s":[["VIP Development — Your Top Players Deserve More","A small share of players drives a large share of NGR. No separate VIP-…"],["How a player becomes a VIP","Every step is a platform feature — click to open it 1 Play & data Ever…"],["The VIP math","From the Digitain bonus guides Revenue concentration 5–8% of players g…"],["Get the treatment right","From the Digitain bonus guides High Roller VIP The High Roller: big en…"],["Key Features","Identify and Tier Dynamic segments, categories, and tags identify and…"]]}];
+var dseSel = 0, dseRows = [];
+function dseOpen(){document.getElementById('dseOv').classList.add('on');var i=document.getElementById('dseIn');i.value='';dseQuery('');setTimeout(function(){i.focus()},30);}
+function dseClose(){document.getElementById('dseOv').classList.remove('on');}
+function dseEsc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function dseMark(s,terms){
+  var e = dseEsc(s);
+  for(var i=0;i<terms.length;i++){
+    var re = new RegExp('('+terms[i].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');
+    e = e.replace(re,'<mark>$1</mark>');
+  }
+  return e;
+}
+function dseQuery(q){
+  q = q.trim().toLowerCase();
+  var terms = q ? q.split(/\s+/) : [];
+  var out = [];
+  for(var p=0;p<DGA_IDX.length;p++){
+    var pg = DGA_IDX[p];
+    if(!terms.length){ out.push({u:pg.u,p:pg.t,h:'Open page',x:'',sc:1}); continue; }
+    var tl = pg.t.toLowerCase(), kw = pg.k;
+    var titleHit = terms.every(function(w){return tl.indexOf(w)>=0});
+    if(titleHit) out.push({u:pg.u,p:pg.t,h:'Open page',x:'',sc:50});
+    for(var s=0;s<pg.s.length;s++){
+      var h = pg.s[s][0], x = pg.s[s][1];
+      var hay = (tl+' '+h+' '+x+' '+kw).toLowerCase();
+      var all = terms.every(function(w){return hay.indexOf(w)>=0});
+      if(!all) continue;
+      var sc = 0;
+      for(var w=0;w<terms.length;w++){
+        if(h.toLowerCase().indexOf(terms[w])>=0) sc+=5;
+        else if(x.toLowerCase().indexOf(terms[w])>=0) sc+=2;
+        else sc+=1;
+      }
+      out.push({u:pg.u,p:pg.t,h:h,x:x,sc:sc});
+    }
+  }
+  out.sort(function(a,b){return b.sc-a.sc});
+  out = out.slice(0, terms.length?14:26);
+  var res = document.getElementById('dseRes');
+  if(!out.length){ res.innerHTML='<div class="dse-empty">No matches — try a product name or a feature term.</div>'; dseRows=[]; return; }
+  var html = '';
+  for(var i=0;i<out.length;i++){
+    html += '<div class="dse-r'+(i===0?' on':'')+'" data-u="'+out[i].u+'" onclick="location.href=this.getAttribute(\'data-u\')" onmousemove="dseHover(this)">'
+      + '<div class="dse-r__p">'+dseEsc(out[i].p)+'</div>'
+      + '<div class="dse-r__h">'+dseMark(out[i].h,terms)+'</div>'
+      + (out[i].x?'<div class="dse-r__x">'+dseMark(out[i].x,terms)+'</div>':'')
+      + '</div>';
+  }
+  res.innerHTML = html; dseSel = 0;
+  dseRows = res.querySelectorAll('.dse-r');
+}
+function dseHover(el){
+  for(var i=0;i<dseRows.length;i++){ dseRows[i].classList.remove('on'); if(dseRows[i]===el) dseSel=i; }
+  el.classList.add('on');
+}
+document.getElementById('dseIn').addEventListener('input',function(){dseQuery(this.value)});
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&(e.key==='k'||e.key==='K')){e.preventDefault();var o=document.getElementById('dseOv');o.classList.contains('on')?dseClose():dseOpen();return;}
+  var ov = document.getElementById('dseOv');
+  if(!ov.classList.contains('on')) return;
+  if(e.key==='Escape'){dseClose();}
+  else if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!dseRows.length) return;
+    dseRows[dseSel].classList.remove('on');
+    dseSel = (dseSel + (e.key==='ArrowDown'?1:-1) + dseRows.length) % dseRows.length;
+    dseRows[dseSel].classList.add('on');
+    dseRows[dseSel].scrollIntoView({block:'nearest'});
+  } else if(e.key==='Enter'){
+    if(dseRows.length) location.href = dseRows[dseSel].getAttribute('data-u');
+  }
+});
+</script>
+<!-- ===== /DGA SEARCH v1 ===== -->
+
+
+<style>/* DGD BADGE v1 */.logo-dyn{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.08em;color:#fff;background:var(--centrivo);border-radius:4px;padding:2px 6px;margin-left:5px;vertical-align:2px}</style>
+</body></html>
